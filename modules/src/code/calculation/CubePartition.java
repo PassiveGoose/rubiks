@@ -1,4 +1,4 @@
-package java.calculation;
+package code.calculation;
 
 import java.util.List;
 

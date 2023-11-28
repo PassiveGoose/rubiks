@@ -1,4 +1,4 @@
-package java.calculation;
+package code.calculation;
 
 public enum Color {
     WHITE,
