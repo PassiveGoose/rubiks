@@ -188,9 +188,64 @@ public class CubesModel {
         System.out.println();
 
         System.out.println("right side:");
+        System.out.print(movableCubes.get(CubeNumber.TOP_CORNER_RIGHT_FRONT.number).cornerColor + " ");
+        System.out.print(movableCubes.get(CubeNumber.TOP_BORDER_RIGHT.number).borderColor + " ");
+        System.out.println(movableCubes.get(CubeNumber.TOP_CORNER_BACK_RIGHT.number).cornerColor);
+        System.out.print(movableCubes.get(CubeNumber.MID_BORDER_RIGHT_FRONT.number).borderColor + " ");
+        System.out.print(rightCenter.frontColor + " ");
+        System.out.println(movableCubes.get(CubeNumber.MID_BORDER_BACK_RIGHT.number).borderColor);
+        System.out.print(movableCubes.get(CubeNumber.BOTTOM_CORNER_RIGHT_FRONT.number).cornerColor + " ");
+        System.out.print(movableCubes.get(CubeNumber.BOTTOM_BORDER_RIGHT.number).borderColor + " ");
+        System.out.println(movableCubes.get(CubeNumber.BOTTOM_CORNER_BACK_RIGHT.number).cornerColor);
+        System.out.println();
 
+        System.out.println("front side:");
+        System.out.print(movableCubes.get(CubeNumber.TOP_CORNER_FRONT_LEFT.number).borderColor + " ");
+        System.out.print(movableCubes.get(CubeNumber.TOP_BORDER_FRONT.number).borderColor + " ");
+        System.out.println(movableCubes.get(CubeNumber.TOP_CORNER_RIGHT_FRONT.number).borderColor);
+        System.out.print(movableCubes.get(CubeNumber.MID_BORDER_FRONT_LEFT.number).frontColor + " ");
+        System.out.print(frontCenter.frontColor + " ");
+        System.out.println(movableCubes.get(CubeNumber.MID_BORDER_RIGHT_FRONT.number).frontColor);
+        System.out.print(movableCubes.get(CubeNumber.BOTTOM_CORNER_FRONT_LEFT.number).borderColor + " ");
+        System.out.print(movableCubes.get(CubeNumber.BOTTOM_BORDER_FRONT.number).borderColor + " ");
+        System.out.println(movableCubes.get(CubeNumber.BOTTOM_CORNER_RIGHT_FRONT.number).borderColor);
+        System.out.println();
 
+        System.out.println("left side:");
+        System.out.print(movableCubes.get(CubeNumber.TOP_CORNER_LEFT_BACK.number).cornerColor + " ");
+        System.out.print(movableCubes.get(CubeNumber.TOP_BORDER_LEFT.number).borderColor + " ");
+        System.out.println(movableCubes.get(CubeNumber.TOP_CORNER_FRONT_LEFT.number).cornerColor);
+        System.out.print(movableCubes.get(CubeNumber.MID_BORDER_LEFT_BACK.number).borderColor + " ");
+        System.out.print(leftCenter.frontColor + " ");
+        System.out.println(movableCubes.get(CubeNumber.MID_BORDER_FRONT_LEFT.number).borderColor);
+        System.out.print(movableCubes.get(CubeNumber.BOTTOM_CORNER_LEFT_BACK.number).cornerColor + " ");
+        System.out.print(movableCubes.get(CubeNumber.BOTTOM_BORDER_LEFT.number).borderColor + " ");
+        System.out.println(movableCubes.get(CubeNumber.BOTTOM_CORNER_FRONT_LEFT.number).cornerColor);
+        System.out.println();
 
+        System.out.println("back side:");
+        System.out.print(movableCubes.get(CubeNumber.TOP_CORNER_LEFT_BACK.number).borderColor + " ");
+        System.out.print(movableCubes.get(CubeNumber.TOP_BORDER_BACK.number).borderColor + " ");
+        System.out.println(movableCubes.get(CubeNumber.TOP_CORNER_BACK_RIGHT.number).borderColor);
+        System.out.print(movableCubes.get(CubeNumber.MID_BORDER_BACK_RIGHT.number).frontColor + " ");
+        System.out.print(backCenter.frontColor + " ");
+        System.out.println(movableCubes.get(CubeNumber.MID_BORDER_LEFT_BACK.number).frontColor);
+        System.out.print(movableCubes.get(CubeNumber.BOTTOM_CORNER_BACK_RIGHT.number).borderColor + " ");
+        System.out.print(movableCubes.get(CubeNumber.BOTTOM_BORDER_BACK.number).borderColor + " ");
+        System.out.println(movableCubes.get(CubeNumber.BOTTOM_CORNER_LEFT_BACK.number).borderColor);
+        System.out.println();
+
+        System.out.println("bottom side:");
+        System.out.print(movableCubes.get(CubeNumber.BOTTOM_CORNER_FRONT_LEFT.number).frontColor + " ");
+        System.out.print(movableCubes.get(CubeNumber.BOTTOM_BORDER_FRONT.number).frontColor + " ");
+        System.out.println(movableCubes.get(CubeNumber.BOTTOM_CORNER_RIGHT_FRONT.number).frontColor);
+        System.out.print(movableCubes.get(CubeNumber.BOTTOM_BORDER_LEFT.number).frontColor + " ");
+        System.out.print(bottomCenter.frontColor + " ");
+        System.out.println(movableCubes.get(CubeNumber.BOTTOM_BORDER_RIGHT.number).frontColor);
+        System.out.print(movableCubes.get(CubeNumber.BOTTOM_CORNER_LEFT_BACK.number).frontColor + " ");
+        System.out.print(movableCubes.get(CubeNumber.BOTTOM_BORDER_BACK.number).frontColor + " ");
+        System.out.println(movableCubes.get(CubeNumber.BOTTOM_CORNER_BACK_RIGHT.number).frontColor);
+        System.out.println();
 
     }
 
