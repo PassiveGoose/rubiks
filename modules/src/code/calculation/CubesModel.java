@@ -1,6 +1,7 @@
 package code.calculation;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CubesModel {
@@ -224,9 +225,9 @@ public class CubesModel {
         System.out.println();
 
         System.out.println("back side:");
-        System.out.print(movableCubes.get(CubeNumber.TOP_CORNER_LEFT_BACK.number).borderColor + " ");
+        System.out.print(movableCubes.get(CubeNumber.TOP_CORNER_BACK_RIGHT.number).borderColor + " ");
         System.out.print(movableCubes.get(CubeNumber.TOP_BORDER_BACK.number).borderColor + " ");
-        System.out.println(movableCubes.get(CubeNumber.TOP_CORNER_BACK_RIGHT.number).borderColor);
+        System.out.println(movableCubes.get(CubeNumber.TOP_CORNER_LEFT_BACK.number).borderColor);
         System.out.print(movableCubes.get(CubeNumber.MID_BORDER_BACK_RIGHT.number).frontColor + " ");
         System.out.print(backCenter.frontColor + " ");
         System.out.println(movableCubes.get(CubeNumber.MID_BORDER_LEFT_BACK.number).frontColor);
@@ -246,7 +247,51 @@ public class CubesModel {
         System.out.print(movableCubes.get(CubeNumber.BOTTOM_BORDER_BACK.number).frontColor + " ");
         System.out.println(movableCubes.get(CubeNumber.BOTTOM_CORNER_BACK_RIGHT.number).frontColor);
         System.out.println();
-
     }
 
+    public void positiveR() {
+        CubePartition tmpCorner = movableCubes.get(CubeNumber.TOP_CORNER_RIGHT_FRONT.number);
+        movableCubes.set(CubeNumber.TOP_CORNER_RIGHT_FRONT.number,
+                movableCubes.get(CubeNumber.BOTTOM_CORNER_RIGHT_FRONT.number));
+        Color tmpColor = movableCubes.get(CubeNumber.TOP_CORNER_RIGHT_FRONT.number).frontColor;
+        movableCubes.get(CubeNumber.TOP_CORNER_RIGHT_FRONT.number).frontColor =
+                movableCubes.get(CubeNumber.TOP_CORNER_RIGHT_FRONT.number).borderColor;
+        movableCubes.get(CubeNumber.TOP_CORNER_RIGHT_FRONT.number).borderColor = tmpColor;
+
+        movableCubes.set(CubeNumber.BOTTOM_CORNER_RIGHT_FRONT.number,
+                movableCubes.get(CubeNumber.BOTTOM_CORNER_BACK_RIGHT.number));
+        tmpColor = movableCubes.get(CubeNumber.BOTTOM_CORNER_RIGHT_FRONT.number).frontColor;
+        movableCubes.get(CubeNumber.BOTTOM_CORNER_RIGHT_FRONT.number).frontColor =
+                movableCubes.get(CubeNumber.BOTTOM_CORNER_RIGHT_FRONT.number).borderColor;
+        movableCubes.get(CubeNumber.BOTTOM_CORNER_RIGHT_FRONT.number).borderColor = tmpColor;
+
+        movableCubes.set(CubeNumber.BOTTOM_CORNER_BACK_RIGHT.number,
+                movableCubes.get(CubeNumber.TOP_CORNER_BACK_RIGHT.number));
+        tmpColor = movableCubes.get(CubeNumber.BOTTOM_CORNER_BACK_RIGHT.number).frontColor;
+        movableCubes.get(CubeNumber.BOTTOM_CORNER_BACK_RIGHT.number).frontColor =
+                movableCubes.get(CubeNumber.BOTTOM_CORNER_BACK_RIGHT.number).borderColor;
+        movableCubes.get(CubeNumber.BOTTOM_CORNER_BACK_RIGHT.number).borderColor = tmpColor;
+
+        movableCubes.set(CubeNumber.TOP_CORNER_BACK_RIGHT.number, tmpCorner);
+        tmpColor = movableCubes.get(CubeNumber.TOP_CORNER_BACK_RIGHT.number).frontColor;
+        movableCubes.get(CubeNumber.TOP_CORNER_BACK_RIGHT.number).frontColor =
+                movableCubes.get(CubeNumber.TOP_CORNER_BACK_RIGHT.number).borderColor;
+        movableCubes.get(CubeNumber.TOP_CORNER_BACK_RIGHT.number).borderColor = tmpColor;
+
+        CubePartition tmpBorder = movableCubes.get(CubeNumber.TOP_BORDER_RIGHT.number);
+        movableCubes.set(CubeNumber.TOP_BORDER_RIGHT.number,
+                movableCubes.get(CubeNumber.MID_BORDER_RIGHT_FRONT.number));
+
+        movableCubes.set(CubeNumber.MID_BORDER_RIGHT_FRONT.number,
+                movableCubes.get(CubeNumber.BOTTOM_BORDER_RIGHT.number));
+
+        movableCubes.set(CubeNumber.BOTTOM_BORDER_RIGHT.number,
+                movableCubes.get(CubeNumber.MID_BORDER_BACK_RIGHT.number));
+
+        movableCubes.set(CubeNumber.MID_BORDER_BACK_RIGHT.number, tmpBorder);
+    }
+
+    public void negativeR() {
+
+    }
 }
