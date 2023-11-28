@@ -19,7 +19,10 @@ public class CubePartition {
 
     Color cornerColor = null;
 
+    CubeType type = null;
+
     public CubePartition(CubeType type, List<Color> colors) {
+        this.type = type;
         frontColor = colors.get(0);
         switch (type) {
             case BORDER -> {
