@@ -28,7 +28,7 @@ public class CubesModel {
         BOTTOM_CORNER_FRONT_LEFT(18),
         BOTTOM_BORDER_LEFT(19);
 
-        int number;
+        final int number;
 
         CubeNumber(int number) {
             this.number = number;
@@ -37,12 +37,12 @@ public class CubesModel {
 
     private final ArrayList<CubePartition> movableCubes = new ArrayList<>();
 
-    private CubePartition topCenter;
-    private CubePartition rightCenter;
-    private CubePartition leftCenter;
-    private CubePartition frontCenter;
-    private CubePartition backCenter;
-    private CubePartition bottomCenter;
+    private final CubePartition topCenter;
+    private final CubePartition rightCenter;
+    private final CubePartition leftCenter;
+    private final CubePartition frontCenter;
+    private final CubePartition backCenter;
+    private final CubePartition bottomCenter;
 
     private final CubeController controller;
 
@@ -250,6 +250,22 @@ public class CubesModel {
         System.out.print(movableCubes.get(CubeNumber.BOTTOM_BORDER_BACK.number).frontColor + " ");
         System.out.println(movableCubes.get(CubeNumber.BOTTOM_CORNER_BACK_RIGHT.number).frontColor);
         System.out.println();
+    }
+
+    public Color[][] getTopSide() {
+        Color[][] topSide = new Color[3][3];
+
+        topSide[0][0] = movableCubes.get(CubeNumber.TOP_CORNER_LEFT_BACK.number).frontColor;
+        topSide[0][1] = movableCubes.get(CubeNumber.TOP_BORDER_BACK.number).frontColor;
+        topSide[0][2] = movableCubes.get(CubeNumber.TOP_CORNER_BACK_RIGHT.number).frontColor;
+        topSide[1][0] = movableCubes.get(CubeNumber.TOP_BORDER_LEFT.number).frontColor;
+        topSide[1][1] = topCenter.frontColor;
+        topSide[1][2] = movableCubes.get(CubeNumber.TOP_BORDER_RIGHT.number).frontColor;
+        topSide[2][0] = movableCubes.get(CubeNumber.TOP_CORNER_FRONT_LEFT.number).frontColor;
+        topSide[2][1] = movableCubes.get(CubeNumber.TOP_BORDER_FRONT.number).frontColor;
+        topSide[2][2] = movableCubes.get(CubeNumber.TOP_CORNER_RIGHT_FRONT.number).frontColor;
+
+        return topSide;
     }
 
     public CubeController getController() {
