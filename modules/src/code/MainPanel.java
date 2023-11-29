@@ -3,9 +3,9 @@ package code;
 import code.calculation.CubeController;
 import code.calculation.CubesModel;
 
-public class MainPanel {
+public final class MainPanel {
 
-    private MainPanel() {
+    public MainPanel() {
         CubesModel model = new CubesModel();
         CubeController controller = model.getController();
         model.printModel();
