@@ -6,7 +6,6 @@ public class MainPanel {
 
     private MainPanel() {
         CubesModel model = new CubesModel();
-        model.positiveR();
         model.printModel();
         System.out.println("model is done");
 
