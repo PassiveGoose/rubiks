@@ -2,10 +2,20 @@ package code;
 
 import code.calculation.CubeController;
 import code.calculation.CubesModel;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
-public final class MainPanel {
+public final class MainPanel extends Application {
 
-    public MainPanel() {
+    @Override
+    public void start(Stage stage) throws Exception {
+        buildCubeModel();
+    }
+
+    public static void main(String[] args) {
+        launch();
+    }
+    private void buildCubeModel (){
         CubesModel model = new CubesModel();
         CubeController controller = model.getController();
         model.printModel();
@@ -18,7 +28,4 @@ public final class MainPanel {
         model.printModel();
     }
 
-    public static void main(String[] args) {
-        final MainPanel panel = new MainPanel();
-    }
 }
