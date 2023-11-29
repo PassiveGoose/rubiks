@@ -1,14 +1,21 @@
 package code;
 
+import code.calculation.CubeController;
 import code.calculation.CubesModel;
 
 public class MainPanel {
 
     private MainPanel() {
         CubesModel model = new CubesModel();
+        CubeController controller = model.getController();
         model.printModel();
-        System.out.println("model is done");
+        controller.rotateLeftToFront();
+        controller.rotateUpToFront();
+        model.printModel();
 
+        controller.rotateDownToFront();
+        controller.rotateRightToFront();
+        model.printModel();
     }
 
     public static void main(String[] args) {
