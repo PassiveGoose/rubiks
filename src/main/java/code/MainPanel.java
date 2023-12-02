@@ -2,6 +2,7 @@ package code;
 
 import code.calculation.CubeController;
 import code.calculation.CubesModel;
+import code.visualization.Cube3D;
 import javafx.application.Application;
 import javafx.scene.*;
 import javafx.scene.image.Image;
@@ -39,55 +40,14 @@ public final class MainPanel extends Application {
         material.setDiffuseMap(new Image(
             new FileInputStream("E:\\project\\rubiksCube\\src\\main\\java\\code\\imageResources\\color_palette.png")));
 
-        TriangleMesh mesh = new TriangleMesh();
-        mesh.getPoints().addAll(
-            0f, 0f, 0f,
-                    0f, 0.5f, 0f,
-                    -0.5f, 0f, 0f,
-                    -0.5f, 0.5f, 0f,
-                    0f, 0f, -0.5f,
-                    0f, 0.5f, -0.5f,
-                    -0.5f, 0f, -0.5f,
-                    -0.5f, 0.5f, -0.5f
-        );
-        mesh.getTexCoords().addAll(
-                1f, 0f,
-                        0f, 0f,
-                        1f, 1f / 7f,
-                        0f, 1f / 7f,
-                        1f, 2f / 7f,
-                        0f, 2f / 7f,
-                        1f, 3f / 7f,
-                        0f, 3f / 7f,
-                        1f, 4f / 7f,
-                        0f, 4f / 7f,
-                        1f, 5f / 7f,
-                        0f, 5f / 7f,
-                        1f, 6f / 7f,
-                        0f, 6f / 7f,
-                        1f, 1f,
-                        0f, 1f
-        );
-        mesh.getFaces().addAll(
-                    0, 4, 1, 6, 2, 5, //BACK
-                          1, 5, 3, 7, 2, 6,
+        Cube3D cube3D = new Cube3D();
 
-                          1, 2, 5, 4, 3, 3, //DOWN
-                          5, 3, 7, 5, 3, 4,
-
-                          4, 8, 5, 10, 0, 9, //RIGHT
-                          5, 9, 1, 11, 0, 10,
-
-                          2, 6, 3, 8, 6, 7, //LEFT
-                          3, 7, 7, 9, 6, 8,
-
-                          6, 10, 7, 12, 4, 11, //FRONT
-                          7, 11, 5, 13, 4, 12,
-
-                          4, 12, 0, 14, 6, 13, //TOP
-                          0, 13, 2, 15, 6, 14
-
-        );
+        TriangleMesh mesh = cube3D.createCube(new int[] {code.calculation.Color.WHITE.number,
+                                                         code.calculation.Color.RED.number,
+                                                         code.calculation.Color.BLUE.number,
+                                                         code.calculation.Color.BLACK.number,
+                                                         code.calculation.Color.BLACK.number,
+                                                         code.calculation.Color.BLACK.number});
 
         Group meshGroup = new Group();
         MeshView meshView = new MeshView();
