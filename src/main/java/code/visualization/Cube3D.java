@@ -19,8 +19,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Cube3D {
 
     Group cube = new Group();
-    Rotate rotateX = new Rotate(30, 0.1, -0.5, 1.5, Rotate.X_AXIS);
-    Rotate rotateY = new Rotate(20, 0.1, -0.5, 1.5, Rotate.Y_AXIS);
+    Rotate rotateX = new Rotate(0, -0.25, -0.25 ,1.25, Rotate.X_AXIS);
+    Rotate rotateY = new Rotate(0, -0.25, -0.25 ,1.25, Rotate.Y_AXIS);
 
     public Cube3D() throws FileNotFoundException {
         PhongMaterial material = new PhongMaterial();
