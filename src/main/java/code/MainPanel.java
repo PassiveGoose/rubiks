@@ -5,15 +5,9 @@ import code.calculation.CubesModel;
 import code.visualization.Cube3D;
 import javafx.application.Application;
 import javafx.scene.*;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.MeshView;
-import javafx.scene.shape.TriangleMesh;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public final class MainPanel extends Application {
@@ -24,7 +18,7 @@ public final class MainPanel extends Application {
     private double mouseOldY;
 
     @Override
-    public void start(Stage stage) throws FileNotFoundException {
+    public void start(Stage stage) throws FileNotFoundException{
         //buildCubeModel();
 
         Group sceneRoot = new Group();
@@ -36,30 +30,11 @@ public final class MainPanel extends Application {
         camera.setTranslateZ(-10);
         scene.setCamera(camera);
 
-        PhongMaterial material = new PhongMaterial();
-        material.setDiffuseMap(new Image(
-            new FileInputStream("E:\\project\\rubiksCube\\src\\main\\java\\code\\imageResources\\color_palette.png")));
-
         Cube3D cube3D = new Cube3D();
+        Group cube = cube3D.getCube();
 
-        TriangleMesh mesh = cube3D.createCube(new int[] {code.calculation.Color.WHITE.number,
-                                                         code.calculation.Color.RED.number,
-                                                         code.calculation.Color.BLUE.number,
-                                                         code.calculation.Color.BLACK.number,
-                                                         code.calculation.Color.BLACK.number,
-                                                         code.calculation.Color.BLACK.number});
+        sceneRoot.getChildren().addAll(cube, new AmbientLight(Color.WHITE));
 
-        Group meshGroup = new Group();
-        MeshView meshView = new MeshView();
-        meshView.setMesh(mesh);
-        meshView.setMaterial(material);
-        meshGroup.getChildren().add(meshView);
-
-        Rotate rotateX = new Rotate(30, 0, 0, 0, Rotate.X_AXIS);
-        Rotate rotateY = new Rotate(20, 0, 0, 0, Rotate.Y_AXIS);
-        meshGroup.getTransforms().addAll(rotateX, rotateY);
-
-        sceneRoot.getChildren().addAll(meshGroup, new AmbientLight(Color.WHITE));
 
         scene.setOnMousePressed(me -> {
             mouseOldX = me.getSceneX();
@@ -68,8 +43,8 @@ public final class MainPanel extends Application {
         scene.setOnMouseDragged(me -> {
             mousePosX = me.getSceneX();
             mousePosY = me.getSceneY();
-            rotateX.setAngle(rotateX.getAngle()-(mouseOldY - mousePosY));
-            rotateY.setAngle(rotateY.getAngle()+(mouseOldX - mousePosX));
+            cube3D.getRotateX().setAngle(cube3D.getRotateX().getAngle()-(mouseOldY - mousePosY));
+            cube3D.getRotateY().setAngle(cube3D.getRotateY().getAngle()+(mouseOldX - mousePosX));
             mouseOldX = mousePosX;
             mouseOldY = mousePosY;
         });
