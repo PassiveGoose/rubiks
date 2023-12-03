@@ -5,10 +5,13 @@ import code.calculation.CubesModel;
 import code.visualization.Cube3D;
 import javafx.application.Application;
 import javafx.scene.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 public final class MainPanel extends Application {
 
@@ -16,6 +19,8 @@ public final class MainPanel extends Application {
     private double mousePosY;
     private double mouseOldX;
     private double mouseOldY;
+
+    Cube3D cube3D;
 
     @Override
     public void start(Stage stage) throws FileNotFoundException{
@@ -30,12 +35,21 @@ public final class MainPanel extends Application {
         camera.setTranslateZ(-10);
         scene.setCamera(camera);
 
-        Cube3D cube3D = new Cube3D();
-        Group cube = cube3D.getCube();
+        cube3D = new Cube3D();
+        List<Group> cubes = cube3D.getCube();
 
-        sceneRoot.getChildren().addAll(cube, new AmbientLight(Color.WHITE));
+        sceneRoot.getChildren().addAll(cubes);
+        sceneRoot.getChildren().add(new AmbientLight(Color.WHITE));
 
-
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+            if (event.getCode().equals(KeyCode.T)) {
+                cube3D.getRotateTop().setAngle(cube3D.getRotateTop().getAngle() + 90);
+            }
+            if (event.getCode().equals(KeyCode.N)) {
+                cube3D.getRotateNext().setAngle(cube3D.getRotateNext().getAngle() + 90);
+            }
+            event.consume();
+        });
         scene.setOnMousePressed(me -> {
             mouseOldX = me.getSceneX();
             mouseOldY = me.getSceneY();
@@ -68,5 +82,4 @@ public final class MainPanel extends Application {
         controller.rotateRightToFront();
         model.printModel();
     }
-
 }

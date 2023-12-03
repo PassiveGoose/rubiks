@@ -12,37 +12,53 @@ import javafx.scene.transform.Translate;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Cube3D {
+    List<Group> cubes = new ArrayList<>();
+    Rotate rotateX = new Rotate(30, -0.25, -0.25 ,1.25, Rotate.X_AXIS);
+    Rotate rotateY = new Rotate(30, -0.25, -0.25 ,1.25, Rotate.Y_AXIS);
 
-    Group cube = new Group();
-    Rotate rotateX = new Rotate(0, -0.25, -0.25 ,1.25, Rotate.X_AXIS);
-    Rotate rotateY = new Rotate(0, -0.25, -0.25 ,1.25, Rotate.Y_AXIS);
+    Rotate rotateTop = new Rotate(0, -0.25, -0.25 ,1.25, Rotate.Y_AXIS);
+
+    Rotate rotateNext = new Rotate(0, Rotate.X_AXIS);
 
     public Cube3D() throws FileNotFoundException {
         PhongMaterial material = new PhongMaterial();
         material.setDiffuseMap(new Image(
             new FileInputStream("E:\\project\\rubiksCube\\src\\main\\java\\code\\imageResources\\color_palette.png")));
-
         AtomicInteger cont = new AtomicInteger();
-        cubeFacePatterns.forEach(p -> {
+
+        Group someCube;
+        for (int i = 0; i < cubeFacePatterns.size(); i++) {
+            someCube = new Group();
+            int[] pattern = cubeFacePatterns.get(i);
             MeshView meshP = new MeshView();
-            meshP.setMesh(createCube(p));
+            meshP.setMesh(createCube(pattern));
             meshP.setMaterial(material);
             Point3D pt = cubePositions.get(cont.getAndIncrement());
             meshP.getTransforms().addAll(new Translate(pt.getX(), pt.getY(), pt.getZ()));
-            cube.getChildren().add(meshP);
+            someCube.getChildren().addAll(meshP);
 
-        });
+            someCube.getTransforms().addAll(rotateX, rotateY);
+            cubes.add(someCube);
+            if (i == 0) {
+                someCube.getTransforms().add(rotateTop);
+            } else {
+                someCube.getTransforms().add(rotateTop);
+                someCube.getTransforms().add(rotateNext);
+                break;
+            }
+        }
 
-        cube.getTransforms().addAll(rotateX, rotateY);
     }
 
-    public Group getCube() {
-        return cube;
+    public List<Group> getCube() {
+        return cubes;
     }
 
     public Rotate getRotateX() {
@@ -51,6 +67,14 @@ public class Cube3D {
 
     public Rotate getRotateY() {
         return rotateY;
+    }
+
+    public Rotate getRotateTop() {
+        return rotateTop;
+    }
+
+    public Rotate getRotateNext() {
+        return rotateNext;
     }
 
     public TriangleMesh createCube(int[] faces) {
@@ -288,12 +312,12 @@ public class Cube3D {
             Color.YELLOW.number};
 
     private static final List<int[]> cubeFacePatterns = Arrays.asList(
-            TOP_CORNER_FRONT_LEFT, TOP_BORDER_FRONT, TOP_CORNER_RIGHT_FRONT, TOP_BORDER_RIGHT, TOP_CORNER_BACK_RIGHT,
+            new int[][]{TOP_CORNER_FRONT_LEFT, TOP_BORDER_FRONT, TOP_CORNER_RIGHT_FRONT, TOP_BORDER_RIGHT, TOP_CORNER_BACK_RIGHT,
             TOP_BORDER_BACK, TOP_CORNER_LEFT_BACK, TOP_BORDER_LEFT, TOP_CENTER,
             MID_BORDER_FRONT_LEFT, MID_CENTER_FRONT, MID_BORDER_RIGHT_FRONT, MID_CENTER_RIGHT,
             MID_BORDER_BACK_RIGHT, MID_CENTER_BACK, MID_BORDER_LEFT_BACK, MID_CENTER_LEFT,
             BOTTOM_CORNER_FRONT_LEFT, BOTTOM_BORDER_FRONT, BOTTOM_CORNER_RIGHT_FRONT, BOTTOM_BORDER_RIGHT,
-            BOTTOM_CORNER_BACK_RIGHT, BOTTOM_BORDER_BACK, BOTTOM_CORNER_LEFT_BACK, BOTTOM_BORDER_LEFT, BOTTOM_CENTER
+            BOTTOM_CORNER_BACK_RIGHT, BOTTOM_BORDER_BACK, BOTTOM_CORNER_LEFT_BACK, BOTTOM_BORDER_LEFT, BOTTOM_CENTER}
     );
 
     private static final Point3D TOP_CORNER_FRONT_LEFT_POSITION = new Point3D(-0.5, -1.0, 1.0);
