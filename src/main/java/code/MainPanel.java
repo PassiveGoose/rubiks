@@ -3,6 +3,7 @@ package code;
 import code.calculation.CubeController;
 import code.calculation.CubesModel;
 import code.visualization.Cube3D;
+import code.visualization.Cube3DPart;
 import javafx.application.Application;
 import javafx.scene.*;
 import javafx.scene.input.KeyCode;
@@ -11,9 +12,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
-import java.util.List;
+import java.util.ArrayList;
 
 public final class MainPanel extends Application {
+
+    private static final int POSITIVE_ROTATION = 1;
+
+    private static final int NEGATIVE_ROTATION = -1;
 
     private double mousePosX;
     private double mousePosY;
@@ -36,17 +41,53 @@ public final class MainPanel extends Application {
         scene.setCamera(camera);
 
         cube3D = new Cube3D();
-        List<Group> cubes = cube3D.getCube();
+        ArrayList<Cube3DPart> cubes = cube3D.getCube();
 
         sceneRoot.getChildren().addAll(cubes);
         sceneRoot.getChildren().add(new AmbientLight(Color.WHITE));
 
         scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (event.getCode().equals(KeyCode.T)) {
-                cube3D.getRotateTop().setAngle(cube3D.getRotateTop().getAngle() + 90);
+               if (event.isShiftDown()) {
+                   cube3D.rotateTop(NEGATIVE_ROTATION);
+               } else {
+                   cube3D.rotateTop(POSITIVE_ROTATION);
+               }
             }
-            if (event.getCode().equals(KeyCode.N)) {
-                cube3D.getRotateNext().setAngle(cube3D.getRotateNext().getAngle() + 90);
+            if (event.getCode().equals(KeyCode.R)) {
+                if (event.isShiftDown()) {
+                    cube3D.rotateRight(NEGATIVE_ROTATION);
+                } else {
+                    cube3D.rotateRight(POSITIVE_ROTATION);
+                }
+            }
+            if (event.getCode().equals(KeyCode.L)) {
+                if (event.isShiftDown()) {
+                    cube3D.rotateLeft(NEGATIVE_ROTATION);
+                } else {
+                    cube3D.rotateLeft(POSITIVE_ROTATION);
+                }
+            }
+            if (event.getCode().equals(KeyCode.D)) {
+                if (event.isShiftDown()) {
+                    cube3D.rotateDown(NEGATIVE_ROTATION);
+                } else {
+                    cube3D.rotateDown(POSITIVE_ROTATION);
+                }
+            }
+            if (event.getCode().equals(KeyCode.F)) {
+                if (event.isShiftDown()) {
+                    cube3D.rotateFront(NEGATIVE_ROTATION);
+                } else {
+                    cube3D.rotateFront(POSITIVE_ROTATION);
+                }
+            }
+            if (event.getCode().equals(KeyCode.B)) {
+                if (event.isShiftDown()) {
+                    cube3D.rotateBack(NEGATIVE_ROTATION);
+                } else {
+                    cube3D.rotateBack(POSITIVE_ROTATION);
+                }
             }
             event.consume();
         });
