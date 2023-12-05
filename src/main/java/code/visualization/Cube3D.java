@@ -1,8 +1,17 @@
 package code.visualization;
 
 import code.calculation.Color;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point3D;
+import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
+import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -16,12 +25,30 @@ public class Cube3D {
     Rotate rotateX = new Rotate(30, -0.25, -0.25 ,1.25, Rotate.X_AXIS);
     Rotate rotateY = new Rotate(30, -0.25, -0.25 ,1.25, Rotate.Y_AXIS);
 
-    int[] topIndexes = new int[] {0, 1, 2, 3, 4, 5, 6, 7};
-    int[] downIndexes = new int[] {23, 22, 21, 20, 19, 18, 17, 24};
-    int[] rightIndexes = new int[] {19, 20, 21, 13, 4, 3, 2, 11};
-    int[] leftIndexes = new int[] {23, 24, 17, 9, 0, 7, 6, 15};
-    int[] frontIndexes = new int[] {17, 18, 19, 11, 2, 1, 0, 9};
-    int[] backIndexes = new int[] {21, 22, 23, 15, 6, 5, 4, 13};
+    int[] currentIndexes;
+
+    Point3D currentAxis;
+
+    boolean isRotating;
+
+    ChangeListener<Number> rotMap = new ChangeListener<>() {
+        @Override
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            Arrays.stream(currentIndexes).forEach(index -> {
+                Rotate rotate = new Rotate(newValue.doubleValue() - oldValue.doubleValue(),
+                        -0.25, -0.25, 1.25, currentAxis);
+                Affine affine = cubes.get(index).getAffine();
+                affine.prepend(rotate);
+            });
+        }
+    };
+
+    int[] topIndexes = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8};
+    int[] downIndexes = new int[] {23, 22, 21, 20, 19, 18, 17, 24, 25};
+    int[] rightIndexes = new int[] {19, 20, 21, 13, 4, 3, 2, 11, 12};
+    int[] leftIndexes = new int[] {23, 24, 17, 9, 0, 7, 6, 15, 16};
+    int[] frontIndexes = new int[] {17, 18, 19, 11, 2, 1, 0, 9, 10};
+    int[] backIndexes = new int[] {21, 22, 23, 15, 6, 5, 4, 13, 14};
 
     public Cube3D() throws FileNotFoundException {
         AtomicInteger cont = new AtomicInteger();
@@ -46,11 +73,28 @@ public class Cube3D {
         return rotateY;
     }
 
+    public boolean isRotating() {
+        return isRotating;
+    }
+
+    private void rotate(double angle) {
+        DoubleProperty rotation=new SimpleDoubleProperty(0d);
+        rotation.addListener(rotMap);
+        isRotating = true;
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.millis(500), e -> {
+                    rotation.removeListener(rotMap);
+                    isRotating = false;
+                } , new KeyValue(rotation, angle)));
+        timeline.playFromStart();
+
+    }
 
     public void rotateTop(int sign) {
-        for (Integer index: topIndexes) {
-            cubes.get(index).getAffine().prepend(new Rotate(sign * 90, -0.25, -0.25 ,1.25, Rotate.Y_AXIS));
-        }
+        currentIndexes = topIndexes;
+        currentAxis = Rotate.Y_AXIS;
+
+        rotate(sign * 90);
 
         if (sign > 0) {
             moveIndexesForward(topIndexes);
@@ -76,9 +120,10 @@ public class Cube3D {
     }
 
     public void rotateRight(int sign) {
-        for (Integer index: rightIndexes) {
-            cubes.get(index).getAffine().prepend(new Rotate(-sign * 90, -0.25, -0.25 ,1.25, Rotate.X_AXIS));
-        }
+        currentIndexes = rightIndexes;
+        currentAxis = Rotate.X_AXIS;
+
+        rotate(-sign * 90);
         if (sign > 0) {
             moveIndexesForward(rightIndexes);
         } else {
@@ -103,9 +148,11 @@ public class Cube3D {
     }
 
     public void rotateLeft(int sign) {
-        for (Integer index: leftIndexes) {
-            cubes.get(index).getAffine().prepend(new Rotate(sign * 90, -0.25, -0.25 ,1.25, Rotate.X_AXIS));
-        }
+        currentIndexes = leftIndexes;
+        currentAxis = Rotate.X_AXIS;
+
+        rotate(sign * 90);
+
         if (sign > 0) {
             moveIndexesForward(leftIndexes);
         } else {
@@ -130,9 +177,10 @@ public class Cube3D {
     }
 
     public void rotateDown(int sign) {
-        for (Integer index: downIndexes) {
-            cubes.get(index).getAffine().prepend(new Rotate(-sign * 90, -0.25, -0.25 ,1.25, Rotate.Y_AXIS));
-        }
+        currentIndexes = downIndexes;
+        currentAxis = Rotate.Y_AXIS;
+
+        rotate(-sign * 90);
 
         if (sign > 0) {
             moveIndexesForward(downIndexes);
@@ -158,9 +206,10 @@ public class Cube3D {
     }
 
     public void rotateFront(int sign) {
-        for (Integer index: frontIndexes) {
-            cubes.get(index).getAffine().prepend(new Rotate(sign * 90, -0.25, -0.25 ,1.25, Rotate.Z_AXIS));
-        }
+        currentIndexes = frontIndexes;
+        currentAxis = Rotate.Z_AXIS;
+
+        rotate(sign * 90);
 
         if (sign > 0) {
             moveIndexesForward(frontIndexes);
@@ -186,9 +235,10 @@ public class Cube3D {
     }
 
     public void rotateBack(int sign) {
-        for (Integer index: backIndexes) {
-            cubes.get(index).getAffine().prepend(new Rotate(-sign * 90, -0.25, -0.25 ,1.25, Rotate.Z_AXIS));
-        }
+        currentIndexes = backIndexes;
+        currentAxis = Rotate.Z_AXIS;
+
+        rotate(-sign * 90);
 
         if (sign > 0) {
             moveIndexesForward(backIndexes);
@@ -196,9 +246,9 @@ public class Cube3D {
             moveIndexesReverse(backIndexes);
         }
 
-        topIndexes[6] = backIndexes[6];
+        topIndexes[6] = backIndexes[4];
         topIndexes[5] = backIndexes[5];
-        topIndexes[4] = backIndexes[4];
+        topIndexes[4] = backIndexes[6];
 
         downIndexes[0] = backIndexes[2];
         downIndexes[1] = backIndexes[1];
@@ -216,7 +266,7 @@ public class Cube3D {
     private void moveIndexesForward(int[] side) {
         int tmpFirst = side[0];
         int tmpSecond = side[1];
-        for (int i = 0; i < side.length - 2; i++) {
+        for (int i = 0; i < side.length - 3; i++) {
             side[i] = side[i + 2];
         }
         side[6] = tmpFirst;
@@ -226,7 +276,7 @@ public class Cube3D {
     private void moveIndexesReverse(int[] side) {
         int tmpFirst = side[6];
         int tmpSecond = side[7];
-        for (int i = side.length - 1; i >= 2 ; i--) {
+        for (int i = side.length - 2; i >= 2 ; i--) {
             side[i] = side[i-2];
         }
         side[0] = tmpFirst;
