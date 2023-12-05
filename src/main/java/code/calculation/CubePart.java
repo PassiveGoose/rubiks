@@ -2,7 +2,7 @@ package code.calculation;
 
 import java.util.List;
 
-public class CubePartition {
+public class CubePart {
 
     public enum CubeType {
         //center of a cube side
@@ -21,7 +21,7 @@ public class CubePartition {
 
     CubeType type;
 
-    public CubePartition(CubeType type, List<Color> colors) {
+    public CubePart(CubeType type, List<Color> colors) {
         this.type = type;
         frontColor = colors.get(0);
         switch (type) {

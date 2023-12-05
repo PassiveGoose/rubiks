@@ -35,14 +35,14 @@ public class CubesModel {
         }
     }
 
-    private final ArrayList<CubePartition> movableCubes = new ArrayList<>();
+    private final ArrayList<CubePart> movableCubes = new ArrayList<>();
 
-    private final CubePartition topCenter;
-    private final CubePartition rightCenter;
-    private final CubePartition leftCenter;
-    private final CubePartition frontCenter;
-    private final CubePartition backCenter;
-    private final CubePartition bottomCenter;
+    private final CubePart topCenter;
+    private final CubePart rightCenter;
+    private final CubePart leftCenter;
+    private final CubePart frontCenter;
+    private final CubePart backCenter;
+    private final CubePart bottomCenter;
 
     private final CubeController controller;
 
@@ -52,127 +52,127 @@ public class CubesModel {
         colors.add(Color.ORANGE);
         colors.add(Color.GREEN);
         movableCubes.add(CubeNumber.TOP_CORNER_LEFT_BACK.number,
-                new CubePartition(CubePartition.CubeType.CORNER, colors));
+                new CubePart(CubePart.CubeType.CORNER, colors));
         colors.clear();
         colors.add(Color.WHITE);
         colors.add(Color.ORANGE);
         movableCubes.add(CubeNumber.TOP_BORDER_BACK.number,
-                new CubePartition(CubePartition.CubeType.BORDER, colors));
+                new CubePart(CubePart.CubeType.BORDER, colors));
         colors.clear();
         colors.add(Color.WHITE);
         colors.add(Color.ORANGE);
         colors.add(Color.BLUE);
         movableCubes.add(CubeNumber.TOP_CORNER_BACK_RIGHT.number,
-                new CubePartition(CubePartition.CubeType.CORNER, colors));
+                new CubePart(CubePart.CubeType.CORNER, colors));
         colors.clear();
         colors.add(Color.WHITE);
         colors.add(Color.BLUE);
         movableCubes.add(CubeNumber.TOP_BORDER_RIGHT.number,
-                new CubePartition(CubePartition.CubeType.BORDER, colors));
+                new CubePart(CubePart.CubeType.BORDER, colors));
         colors.clear();
         colors.add(Color.WHITE);
         colors.add(Color.RED);
         colors.add(Color.BLUE);
         movableCubes.add(CubeNumber.TOP_CORNER_RIGHT_FRONT.number,
-                new CubePartition(CubePartition.CubeType.CORNER, colors));
+                new CubePart(CubePart.CubeType.CORNER, colors));
         colors.clear();
         colors.add(Color.WHITE);
         colors.add(Color.RED);
         movableCubes.add(CubeNumber.TOP_BORDER_FRONT.number,
-                new CubePartition(CubePartition.CubeType.BORDER, colors));
+                new CubePart(CubePart.CubeType.BORDER, colors));
         colors.clear();
         colors.add(Color.WHITE);
         colors.add(Color.RED);
         colors.add(Color.GREEN);
         movableCubes.add(CubeNumber.TOP_CORNER_FRONT_LEFT.number,
-                new CubePartition(CubePartition.CubeType.CORNER, colors));
+                new CubePart(CubePart.CubeType.CORNER, colors));
         colors.clear();
         colors.add(Color.WHITE);
         colors.add(Color.GREEN);
         movableCubes.add(CubeNumber.TOP_BORDER_LEFT.number,
-                new CubePartition(CubePartition.CubeType.BORDER, colors));
+                new CubePart(CubePart.CubeType.BORDER, colors));
         colors.clear();
         colors.add(Color.ORANGE);
         colors.add(Color.GREEN);
         movableCubes.add(CubeNumber.MID_BORDER_LEFT_BACK.number,
-                new CubePartition(CubePartition.CubeType.BORDER, colors));
+                new CubePart(CubePart.CubeType.BORDER, colors));
         colors.clear();
         colors.add(Color.ORANGE);
         colors.add(Color.BLUE);
         movableCubes.add(CubeNumber.MID_BORDER_BACK_RIGHT.number,
-                new CubePartition(CubePartition.CubeType.BORDER, colors));
+                new CubePart(CubePart.CubeType.BORDER, colors));
         colors.clear();
         colors.add(Color.RED);
         colors.add(Color.BLUE);
         movableCubes.add(CubeNumber.MID_BORDER_RIGHT_FRONT.number,
-                new CubePartition(CubePartition.CubeType.BORDER, colors));
+                new CubePart(CubePart.CubeType.BORDER, colors));
         colors.clear();
         colors.add(Color.RED);
         colors.add(Color.GREEN);
         movableCubes.add(CubeNumber.MID_BORDER_FRONT_LEFT.number,
-                new CubePartition(CubePartition.CubeType.BORDER, colors));
+                new CubePart(CubePart.CubeType.BORDER, colors));
         colors.clear();
         colors.add(Color.YELLOW);
         colors.add(Color.ORANGE);
         colors.add(Color.GREEN);
         movableCubes.add(CubeNumber.BOTTOM_CORNER_LEFT_BACK.number,
-                new CubePartition(CubePartition.CubeType.CORNER, colors));
+                new CubePart(CubePart.CubeType.CORNER, colors));
         colors.clear();
         colors.add(Color.YELLOW);
         colors.add(Color.ORANGE);
         movableCubes.add(CubeNumber.BOTTOM_BORDER_BACK.number,
-                new CubePartition(CubePartition.CubeType.BORDER, colors));
+                new CubePart(CubePart.CubeType.BORDER, colors));
         colors.clear();
         colors.add(Color.YELLOW);
         colors.add(Color.ORANGE);
         colors.add(Color.BLUE);
         movableCubes.add(CubeNumber.BOTTOM_CORNER_BACK_RIGHT.number,
-                new CubePartition(CubePartition.CubeType.CORNER, colors));
+                new CubePart(CubePart.CubeType.CORNER, colors));
         colors.clear();
         colors.add(Color.YELLOW);
         colors.add(Color.BLUE);
         movableCubes.add(CubeNumber.BOTTOM_BORDER_RIGHT.number,
-                new CubePartition(CubePartition.CubeType.BORDER, colors));
+                new CubePart(CubePart.CubeType.BORDER, colors));
         colors.clear();
         colors.add(Color.YELLOW);
         colors.add(Color.RED);
         colors.add(Color.BLUE);
         movableCubes.add(CubeNumber.BOTTOM_CORNER_RIGHT_FRONT.number,
-                new CubePartition(CubePartition.CubeType.CORNER, colors));
+                new CubePart(CubePart.CubeType.CORNER, colors));
         colors.clear();
         colors.add(Color.YELLOW);
         colors.add(Color.RED);
         movableCubes.add(CubeNumber.BOTTOM_BORDER_FRONT.number,
-                new CubePartition(CubePartition.CubeType.BORDER, colors));
+                new CubePart(CubePart.CubeType.BORDER, colors));
         colors.clear();
         colors.add(Color.YELLOW);
         colors.add(Color.RED);
         colors.add(Color.GREEN);
         movableCubes.add(CubeNumber.BOTTOM_CORNER_FRONT_LEFT.number,
-                new CubePartition(CubePartition.CubeType.CORNER, colors));
+                new CubePart(CubePart.CubeType.CORNER, colors));
         colors.clear();
         colors.add(Color.YELLOW);
         colors.add(Color.GREEN);
         movableCubes.add(CubeNumber.BOTTOM_BORDER_LEFT.number,
-                new CubePartition(CubePartition.CubeType.BORDER, colors));
+                new CubePart(CubePart.CubeType.BORDER, colors));
         colors.clear();
         colors.add(Color.WHITE);
-        topCenter = new CubePartition(CubePartition.CubeType.CENTER, colors);
+        topCenter = new CubePart(CubePart.CubeType.CENTER, colors);
         colors.clear();
         colors.add(Color.BLUE);
-        rightCenter = new CubePartition(CubePartition.CubeType.CENTER, colors);
+        rightCenter = new CubePart(CubePart.CubeType.CENTER, colors);
         colors.clear();
         colors.add(Color.RED);
-        frontCenter = new CubePartition(CubePartition.CubeType.CENTER, colors);
+        frontCenter = new CubePart(CubePart.CubeType.CENTER, colors);
         colors.clear();
         colors.add(Color.ORANGE);
-        backCenter = new CubePartition(CubePartition.CubeType.CENTER, colors);
+        backCenter = new CubePart(CubePart.CubeType.CENTER, colors);
         colors.clear();
         colors.add(Color.GREEN);
-        leftCenter = new CubePartition(CubePartition.CubeType.CENTER, colors);
+        leftCenter = new CubePart(CubePart.CubeType.CENTER, colors);
         colors.clear();
         colors.add(Color.YELLOW);
-        bottomCenter = new CubePartition(CubePartition.CubeType.CENTER, colors);
+        bottomCenter = new CubePart(CubePart.CubeType.CENTER, colors);
 
         controller = new CubeController(movableCubes, topCenter, rightCenter, leftCenter,
                                         frontCenter, backCenter, bottomCenter);

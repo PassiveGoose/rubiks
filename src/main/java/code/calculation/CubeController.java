@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 public class CubeController {
 
-    private final ArrayList<CubePartition> movableCubes;
+    private final ArrayList<CubePart> movableCubes;
 
-    private final CubePartition topCenter;
-    private final CubePartition rightCenter;
-    private final CubePartition leftCenter;
-    private final CubePartition frontCenter;
-    private final CubePartition backCenter;
-    private final CubePartition bottomCenter;
+    private final CubePart topCenter;
+    private final CubePart rightCenter;
+    private final CubePart leftCenter;
+    private final CubePart frontCenter;
+    private final CubePart backCenter;
+    private final CubePart bottomCenter;
 
-    public CubeController(ArrayList<CubePartition> movableCubes, CubePartition topCenter, CubePartition rightCenter,
-                                                                 CubePartition leftCenter, CubePartition frontCenter,
-                                                                 CubePartition backCenter, CubePartition bottomCenter) {
+    public CubeController(ArrayList<CubePart> movableCubes, CubePart topCenter, CubePart rightCenter,
+                          CubePart leftCenter, CubePart frontCenter,
+                          CubePart backCenter, CubePart bottomCenter) {
         this.movableCubes = movableCubes;
         this.topCenter = topCenter;
         this.rightCenter = rightCenter;
@@ -27,7 +27,7 @@ public class CubeController {
 
     public void positiveR() {
         //rotate corners
-        CubePartition tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_RIGHT_FRONT.number);
+        CubePart tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_RIGHT_FRONT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_CORNER_RIGHT_FRONT.number,
                 movableCubes.get(CubesModel.CubeNumber.BOTTOM_CORNER_RIGHT_FRONT.number));
 
@@ -42,7 +42,7 @@ public class CubeController {
         rotateCornerColorsR();
 
         //rotate borders
-        CubePartition tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_RIGHT.number);
+        CubePart tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_RIGHT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_BORDER_RIGHT.number,
                 movableCubes.get(CubesModel.CubeNumber.MID_BORDER_RIGHT_FRONT.number));
 
@@ -57,7 +57,7 @@ public class CubeController {
 
     public void negativeR() {
         //rotate corners
-        CubePartition tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_RIGHT_FRONT.number);
+        CubePart tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_RIGHT_FRONT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_CORNER_RIGHT_FRONT.number,
                 movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_BACK_RIGHT.number));
 
@@ -72,7 +72,7 @@ public class CubeController {
         rotateCornerColorsR();
 
         //rotate borders
-        CubePartition tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_RIGHT.number);
+        CubePart tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_RIGHT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_BORDER_RIGHT.number,
                 movableCubes.get(CubesModel.CubeNumber.MID_BORDER_BACK_RIGHT.number));
 
@@ -106,7 +106,7 @@ public class CubeController {
 
     public void negativeL() {
         //rotate corners
-        CubePartition tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number);
+        CubePart tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number,
                 movableCubes.get(CubesModel.CubeNumber.BOTTOM_CORNER_FRONT_LEFT.number));
 
@@ -121,7 +121,7 @@ public class CubeController {
         rotateCornerColorsL();
 
         //rotate borders
-        CubePartition tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_LEFT.number);
+        CubePart tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_LEFT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_BORDER_LEFT.number,
                 movableCubes.get(CubesModel.CubeNumber.MID_BORDER_FRONT_LEFT.number));
 
@@ -136,7 +136,7 @@ public class CubeController {
 
     public void positiveL() {
         //rotate corners
-        CubePartition tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number);
+        CubePart tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number,
                 movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_LEFT_BACK.number));
 
@@ -151,7 +151,7 @@ public class CubeController {
         rotateCornerColorsL();
 
         //rotate borders
-        CubePartition tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_LEFT.number);
+        CubePart tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_LEFT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_BORDER_LEFT.number,
                 movableCubes.get(CubesModel.CubeNumber.MID_BORDER_LEFT_BACK.number));
 
@@ -185,7 +185,7 @@ public class CubeController {
 
     public void positiveF() {
         //rotate corners
-        CubePartition tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number);
+        CubePart tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number,
                 movableCubes.get(CubesModel.CubeNumber.BOTTOM_CORNER_FRONT_LEFT.number));
 
@@ -200,7 +200,7 @@ public class CubeController {
         rotateCornerColorsF();
 
         //rotate borders
-        CubePartition tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_FRONT.number);
+        CubePart tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_FRONT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_BORDER_FRONT.number,
                 movableCubes.get(CubesModel.CubeNumber.MID_BORDER_FRONT_LEFT.number));
 
@@ -215,7 +215,7 @@ public class CubeController {
 
     public void negativeF() {
         //rotate corners
-        CubePartition tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number);
+        CubePart tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number,
                 movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_RIGHT_FRONT.number));
 
@@ -230,7 +230,7 @@ public class CubeController {
         rotateCornerColorsF();
 
         //rotate borders
-        CubePartition tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_FRONT.number);
+        CubePart tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_FRONT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_BORDER_FRONT.number,
                 movableCubes.get(CubesModel.CubeNumber.MID_BORDER_RIGHT_FRONT.number));
 
@@ -281,7 +281,7 @@ public class CubeController {
 
     public void positiveT() {
         //rotate corners
-        CubePartition tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number);
+        CubePart tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number,
                 movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_RIGHT_FRONT.number));
 
@@ -296,7 +296,7 @@ public class CubeController {
         rotateCornerColorsT();
 
         //rotate borders
-        CubePartition tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_FRONT.number);
+        CubePart tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_FRONT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_BORDER_FRONT.number,
                 movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_RIGHT.number));
 
@@ -311,7 +311,7 @@ public class CubeController {
 
     public void negativeT() {
         //rotate corners
-        CubePartition tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number);
+        CubePart tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number,
                 movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_LEFT_BACK.number));
 
@@ -326,7 +326,7 @@ public class CubeController {
         rotateCornerColorsT();
 
         //rotate borders
-        CubePartition tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_FRONT.number);
+        CubePart tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_FRONT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_BORDER_FRONT.number,
                 movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_LEFT.number));
 
@@ -360,7 +360,7 @@ public class CubeController {
 
     public void positiveB() {
         //rotate corners
-        CubePartition tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_BACK_RIGHT.number);
+        CubePart tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_BACK_RIGHT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_CORNER_BACK_RIGHT.number,
                 movableCubes.get(CubesModel.CubeNumber.BOTTOM_CORNER_BACK_RIGHT.number));
 
@@ -375,7 +375,7 @@ public class CubeController {
         rotateCornerColorsB();
 
         //rotate borders
-        CubePartition tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_BACK.number);
+        CubePart tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_BACK.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_BORDER_BACK.number,
                 movableCubes.get(CubesModel.CubeNumber.MID_BORDER_BACK_RIGHT.number));
 
@@ -390,7 +390,7 @@ public class CubeController {
 
     public void negativeB() {
         //rotate corners
-        CubePartition tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_BACK_RIGHT.number);
+        CubePart tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_BACK_RIGHT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_CORNER_BACK_RIGHT.number,
                 movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_LEFT_BACK.number));
 
@@ -405,7 +405,7 @@ public class CubeController {
         rotateCornerColorsB();
 
         //rotate borders
-        CubePartition tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_BACK.number);
+        CubePart tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_BACK.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_BORDER_BACK.number,
                 movableCubes.get(CubesModel.CubeNumber.MID_BORDER_LEFT_BACK.number));
 
@@ -456,7 +456,7 @@ public class CubeController {
 
     public void positiveD() {
         //rotate corners
-        CubePartition tmpCorner = movableCubes.get(CubesModel.CubeNumber.BOTTOM_CORNER_FRONT_LEFT.number);
+        CubePart tmpCorner = movableCubes.get(CubesModel.CubeNumber.BOTTOM_CORNER_FRONT_LEFT.number);
         movableCubes.set(CubesModel.CubeNumber.BOTTOM_CORNER_FRONT_LEFT.number,
                 movableCubes.get(CubesModel.CubeNumber.BOTTOM_CORNER_LEFT_BACK.number));
 
@@ -471,7 +471,7 @@ public class CubeController {
         rotateCornerColorsD();
 
         //rotate borders
-        CubePartition tmpBorder = movableCubes.get(CubesModel.CubeNumber.BOTTOM_BORDER_FRONT.number);
+        CubePart tmpBorder = movableCubes.get(CubesModel.CubeNumber.BOTTOM_BORDER_FRONT.number);
         movableCubes.set(CubesModel.CubeNumber.BOTTOM_BORDER_FRONT.number,
                 movableCubes.get(CubesModel.CubeNumber.BOTTOM_BORDER_LEFT.number));
 
@@ -486,7 +486,7 @@ public class CubeController {
 
     public void negativeD() {
         //rotate corners
-        CubePartition tmpCorner = movableCubes.get(CubesModel.CubeNumber.BOTTOM_CORNER_FRONT_LEFT.number);
+        CubePart tmpCorner = movableCubes.get(CubesModel.CubeNumber.BOTTOM_CORNER_FRONT_LEFT.number);
         movableCubes.set(CubesModel.CubeNumber.BOTTOM_CORNER_FRONT_LEFT.number,
                 movableCubes.get(CubesModel.CubeNumber.BOTTOM_CORNER_RIGHT_FRONT.number));
 
@@ -501,7 +501,7 @@ public class CubeController {
         rotateCornerColorsD();
 
         //rotate borders
-        CubePartition tmpBorder = movableCubes.get(CubesModel.CubeNumber.BOTTOM_BORDER_FRONT.number);
+        CubePart tmpBorder = movableCubes.get(CubesModel.CubeNumber.BOTTOM_BORDER_FRONT.number);
         movableCubes.set(CubesModel.CubeNumber.BOTTOM_BORDER_FRONT.number,
                 movableCubes.get(CubesModel.CubeNumber.BOTTOM_BORDER_RIGHT.number));
 
@@ -543,7 +543,7 @@ public class CubeController {
         positiveT();
         negativeD();
         moveCentresRightToFront();
-        CubePartition tmpBorder = movableCubes.get(CubesModel.CubeNumber.MID_BORDER_RIGHT_FRONT.number);
+        CubePart tmpBorder = movableCubes.get(CubesModel.CubeNumber.MID_BORDER_RIGHT_FRONT.number);
         movableCubes.set(CubesModel.CubeNumber.MID_BORDER_RIGHT_FRONT.number,
                 movableCubes.get(CubesModel.CubeNumber.MID_BORDER_BACK_RIGHT.number));
         movableCubes.set(CubesModel.CubeNumber.MID_BORDER_BACK_RIGHT.number,
@@ -591,7 +591,7 @@ public class CubeController {
         negativeR();
         negativeL();
         moveCentresUpToFront();
-        CubePartition tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_FRONT.number);
+        CubePart tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_FRONT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_BORDER_FRONT.number,
                 movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_BACK.number));
         movableCubes.set(CubesModel.CubeNumber.TOP_BORDER_BACK.number,

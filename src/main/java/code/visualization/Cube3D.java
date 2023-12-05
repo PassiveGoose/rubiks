@@ -89,7 +89,6 @@ public class Cube3D {
                     isRotating = false;
                 } , new KeyValue(rotation, angle)));
         timeline.playFromStart();
-
     }
 
     public void rotateTop(int sign) {
