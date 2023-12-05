@@ -74,14 +74,6 @@ public class Cube3D {
         return cubes;
     }
 
-    public Rotate getRotateX() {
-        return rotateX;
-    }
-
-    public Rotate getRotateY() {
-        return rotateY;
-    }
-
     public boolean isRotating() {
         return isRotating;
     }
@@ -110,16 +102,17 @@ public class Cube3D {
         }
     }
 
-    private void moveSides(int[] rightIndexes, int[] leftIndexes, int[] topIndexes, int[] downIndexes) {
+    private void moveSides(int[] firstMovableSide, int[] secondMovableSide,
+                           int[] firstNonMovableSide, int[] secondNonMovableSide) {
         int[] tmpIndexes = new int[9];
-        System.arraycopy(frontIndexes, 0, tmpIndexes, 0, rightIndexes.length);
-        System.arraycopy(rightIndexes, 0, frontIndexes, 0, rightIndexes.length);
-        System.arraycopy(backIndexes, 0, rightIndexes, 0, rightIndexes.length);
-        System.arraycopy(leftIndexes, 0, backIndexes, 0, rightIndexes.length);
-        System.arraycopy(tmpIndexes, 0, leftIndexes, 0, rightIndexes.length);
+        System.arraycopy(frontIndexes, 0, tmpIndexes, 0, firstMovableSide.length);
+        System.arraycopy(firstMovableSide, 0, frontIndexes, 0, firstMovableSide.length);
+        System.arraycopy(backIndexes, 0, firstMovableSide, 0, firstMovableSide.length);
+        System.arraycopy(secondMovableSide, 0, backIndexes, 0, firstMovableSide.length);
+        System.arraycopy(tmpIndexes, 0, secondMovableSide, 0, firstMovableSide.length);
 
-        moveIndexesForward(topIndexes);
-        moveIndexesReverse(downIndexes);
+        moveIndexesForward(firstNonMovableSide);
+        moveIndexesReverse(secondNonMovableSide);
     }
 
     public void rotateVertical(int sign) {
@@ -138,12 +131,6 @@ public class Cube3D {
             reverseSide(backIndexes);
         }
 
-    }
-
-    public void rotateUpToDown() {
-        moveSides(topIndexes, downIndexes, leftIndexes, rightIndexes);
-        reverseSide(topIndexes);
-        reverseSide(backIndexes);
     }
 
     private void reverseSide(int[] side) {

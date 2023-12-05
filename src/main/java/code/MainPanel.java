@@ -4,17 +4,12 @@ import code.calculation.CubeController;
 import code.calculation.CubesModel;
 import code.visualization.Cube3D;
 import code.visualization.Cube3DPart;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -24,11 +19,6 @@ public final class MainPanel extends Application {
     private static final int POSITIVE_ROTATION = 1;
 
     private static final int NEGATIVE_ROTATION = -1;
-
-    private double mousePosX;
-    private double mousePosY;
-    private double mouseOldX;
-    private double mouseOldY;
 
     Cube3D cube3D;
 
@@ -126,19 +116,6 @@ public final class MainPanel extends Application {
             }
             event.consume();
         });
-        /*
-        scene.setOnMousePressed(me -> {
-            mouseOldX = me.getSceneX();
-            mouseOldY = me.getSceneY();
-        });
-        scene.setOnMouseDragged(me -> {
-            mousePosX = me.getSceneX();
-            mousePosY = me.getSceneY();
-            cube3D.getRotateX().setAngle(cube3D.getRotateX().getAngle()-(mouseOldY - mousePosY));
-            cube3D.getRotateY().setAngle(cube3D.getRotateY().getAngle()+(mouseOldX - mousePosX));
-            mouseOldX = mousePosX;
-            mouseOldY = mousePosY;
-        });*/
 
         stage.setScene(scene);
         stage.show();
