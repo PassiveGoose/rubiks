@@ -334,180 +334,206 @@ public class Cube3D {
         side[1] = tmpSecond;
     }
 
-    private static final int[] TOP_CORNER_FRONT_LEFT = new int[] {Color.WHITE.number,
+    private static final int[] TOP_CORNER_FRONT_LEFT = new int[] {
+            Color.WHITE.number,
             Color.RED.number,
             Color.BLACK.number,
             Color.GREEN.number,
             Color.BLACK.number,
             Color.BLACK.number};
-    private static final int[] TOP_BORDER_FRONT = new int[] {code.calculation.Color.WHITE.number,
-            Color.RED.number,
-            Color.BLACK.number,
-            Color.BLACK.number,
-            Color.BLACK.number,
-            Color.BLACK.number};
-
-    private static final int[] TOP_CORNER_RIGHT_FRONT = new int[] {Color.WHITE.number,
-            Color.RED.number,
-            Color.BLUE.number,
-            Color.BLACK.number,
-            Color.BLACK.number,
-            Color.BLACK.number};
-
-    private static final int[] TOP_BORDER_RIGHT = new int[] {Color.WHITE.number,
-            Color.BLACK.number,
-            Color.BLUE.number,
-            Color.BLACK.number,
-            Color.BLACK.number,
-            Color.BLACK.number};
-
-    private static final int[] TOP_CORNER_BACK_RIGHT = new int[] {Color.WHITE.number,
-            Color.BLACK.number,
-            Color.BLUE.number,
-            Color.BLACK.number,
-            Color.ORANGE.number,
-            Color.BLACK.number};
-
-    private static final int[] TOP_BORDER_BACK = new int[] {Color.WHITE.number,
-            Color.BLACK.number,
-            Color.BLACK.number,
-            Color.BLACK.number,
-            Color.ORANGE.number,
-            Color.BLACK.number};
-
-    private static final int[] TOP_CORNER_LEFT_BACK = new int[] {Color.WHITE.number,
-            Color.BLACK.number,
-            Color.BLACK.number,
-            Color.GREEN.number,
-            Color.ORANGE.number,
-            Color.BLACK.number};
-
-    private static final int[] TOP_BORDER_LEFT = new int[] {Color.WHITE.number,
-            Color.BLACK.number,
-            Color.BLACK.number,
-            Color.GREEN.number,
-            Color.BLACK.number,
-            Color.BLACK.number};
-
-    private static final int[] TOP_CENTER = new int[] {Color.WHITE.number,
-            Color.BLACK.number,
-            Color.BLACK.number,
-            Color.BLACK.number,
-            Color.BLACK.number,
-            Color.BLACK.number};
-
-    private static final int[] MID_BORDER_FRONT_LEFT = new int[] {Color.BLACK.number,
-            Color.RED.number,
-            Color.BLACK.number,
-            Color.GREEN.number,
-            Color.BLACK.number,
-            Color.BLACK.number};
-
-    private static final int[] MID_CENTER_FRONT = new int[] {Color.BLACK.number,
+    private static final int[] TOP_BORDER_FRONT = new int[] {
+            Color.WHITE.number,
             Color.RED.number,
             Color.BLACK.number,
             Color.BLACK.number,
             Color.BLACK.number,
             Color.BLACK.number};
 
-    private static final int[] MID_BORDER_RIGHT_FRONT = new int[] {Color.BLACK.number,
+    private static final int[] TOP_CORNER_RIGHT_FRONT = new int[] {
+            Color.WHITE.number,
             Color.RED.number,
             Color.BLUE.number,
             Color.BLACK.number,
             Color.BLACK.number,
             Color.BLACK.number};
 
-    private static final int[] MID_CENTER_RIGHT = new int[] {Color.BLACK.number,
+    private static final int[] TOP_BORDER_RIGHT = new int[] {
+            Color.WHITE.number,
             Color.BLACK.number,
             Color.BLUE.number,
             Color.BLACK.number,
             Color.BLACK.number,
             Color.BLACK.number};
 
-    private static final int[] MID_BORDER_BACK_RIGHT = new int[] {Color.BLACK.number,
+    private static final int[] TOP_CORNER_BACK_RIGHT = new int[] {
+            Color.WHITE.number,
             Color.BLACK.number,
             Color.BLUE.number,
             Color.BLACK.number,
             Color.ORANGE.number,
             Color.BLACK.number};
 
-    private static final int[] MID_CENTER_BACK = new int[] {Color.BLACK.number,
+    private static final int[] TOP_BORDER_BACK = new int[] {
+            Color.WHITE.number,
             Color.BLACK.number,
             Color.BLACK.number,
             Color.BLACK.number,
             Color.ORANGE.number,
             Color.BLACK.number};
 
-    private static final int[] MID_BORDER_LEFT_BACK = new int[] {Color.BLACK.number,
+    private static final int[] TOP_CORNER_LEFT_BACK = new int[] {
+            Color.WHITE.number,
             Color.BLACK.number,
             Color.BLACK.number,
             Color.GREEN.number,
             Color.ORANGE.number,
             Color.BLACK.number};
 
-    private static final int[] MID_CENTER_LEFT = new int[] {Color.BLACK.number,
+    private static final int[] TOP_BORDER_LEFT = new int[] {
+            Color.WHITE.number,
             Color.BLACK.number,
             Color.BLACK.number,
             Color.GREEN.number,
             Color.BLACK.number,
             Color.BLACK.number};
 
-    private static final int[] BOTTOM_CORNER_FRONT_LEFT = new int[] {Color.BLACK.number,
+    private static final int[] TOP_CENTER = new int[] {
+            Color.WHITE.number,
+            Color.BLACK.number,
+            Color.BLACK.number,
+            Color.BLACK.number,
+            Color.BLACK.number,
+            Color.BLACK.number};
+
+    private static final int[] MID_BORDER_FRONT_LEFT = new int[] {
+            Color.BLACK.number,
+            Color.RED.number,
+            Color.BLACK.number,
+            Color.GREEN.number,
+            Color.BLACK.number,
+            Color.BLACK.number};
+
+    private static final int[] MID_CENTER_FRONT = new int[] {
+            Color.BLACK.number,
+            Color.RED.number,
+            Color.BLACK.number,
+            Color.BLACK.number,
+            Color.BLACK.number,
+            Color.BLACK.number};
+
+    private static final int[] MID_BORDER_RIGHT_FRONT = new int[] {
+            Color.BLACK.number,
+            Color.RED.number,
+            Color.BLUE.number,
+            Color.BLACK.number,
+            Color.BLACK.number,
+            Color.BLACK.number};
+
+    private static final int[] MID_CENTER_RIGHT = new int[] {
+            Color.BLACK.number,
+            Color.BLACK.number,
+            Color.BLUE.number,
+            Color.BLACK.number,
+            Color.BLACK.number,
+            Color.BLACK.number};
+
+    private static final int[] MID_BORDER_BACK_RIGHT = new int[] {
+            Color.BLACK.number,
+            Color.BLACK.number,
+            Color.BLUE.number,
+            Color.BLACK.number,
+            Color.ORANGE.number,
+            Color.BLACK.number};
+
+    private static final int[] MID_CENTER_BACK = new int[] {
+            Color.BLACK.number,
+            Color.BLACK.number,
+            Color.BLACK.number,
+            Color.BLACK.number,
+            Color.ORANGE.number,
+            Color.BLACK.number};
+
+    private static final int[] MID_BORDER_LEFT_BACK = new int[] {
+            Color.BLACK.number,
+            Color.BLACK.number,
+            Color.BLACK.number,
+            Color.GREEN.number,
+            Color.ORANGE.number,
+            Color.BLACK.number};
+
+    private static final int[] MID_CENTER_LEFT = new int[] {
+            Color.BLACK.number,
+            Color.BLACK.number,
+            Color.BLACK.number,
+            Color.GREEN.number,
+            Color.BLACK.number,
+            Color.BLACK.number};
+
+    private static final int[] BOTTOM_CORNER_FRONT_LEFT = new int[] {
+            Color.BLACK.number,
             Color.RED.number,
             Color.BLACK.number,
             Color.GREEN.number,
             Color.BLACK.number,
             Color.YELLOW.number};
 
-    private static final int[] BOTTOM_BORDER_FRONT = new int[] {Color.BLACK.number,
+    private static final int[] BOTTOM_BORDER_FRONT = new int[] {
+            Color.BLACK.number,
             Color.RED.number,
             Color.BLACK.number,
             Color.BLACK.number,
             Color.BLACK.number,
             Color.YELLOW.number};
 
-    private static final int[] BOTTOM_CORNER_RIGHT_FRONT = new int[] {Color.BLACK.number,
+    private static final int[] BOTTOM_CORNER_RIGHT_FRONT = new int[] {
+            Color.BLACK.number,
             Color.RED.number,
             Color.BLUE.number,
             Color.BLACK.number,
             Color.BLACK.number,
             Color.YELLOW.number};
 
-    private static final int[] BOTTOM_BORDER_RIGHT = new int[] {Color.BLACK.number,
+    private static final int[] BOTTOM_BORDER_RIGHT = new int[] {
+            Color.BLACK.number,
             Color.BLACK.number,
             Color.BLUE.number,
             Color.BLACK.number,
             Color.BLACK.number,
             Color.YELLOW.number};
 
-    private static final int[] BOTTOM_CORNER_BACK_RIGHT = new int[] {Color.BLACK.number,
+    private static final int[] BOTTOM_CORNER_BACK_RIGHT = new int[] {
+            Color.BLACK.number,
             Color.BLACK.number,
             Color.BLUE.number,
             Color.BLACK.number,
             Color.ORANGE.number,
             Color.YELLOW.number};
 
-    private static final int[] BOTTOM_BORDER_BACK = new int[] {Color.BLACK.number,
+    private static final int[] BOTTOM_BORDER_BACK = new int[] {
+            Color.BLACK.number,
             Color.BLACK.number,
             Color.BLACK.number,
             Color.BLACK.number,
             Color.ORANGE.number,
             Color.YELLOW.number};
 
-    private static final int[] BOTTOM_CORNER_LEFT_BACK = new int[] {Color.BLACK.number,
+    private static final int[] BOTTOM_CORNER_LEFT_BACK = new int[] {
+            Color.BLACK.number,
             Color.BLACK.number,
             Color.BLACK.number,
             Color.GREEN.number,
             Color.ORANGE.number,
             Color.YELLOW.number};
-    private static final int[] BOTTOM_BORDER_LEFT = new int[] {Color.BLACK.number,
+    private static final int[] BOTTOM_BORDER_LEFT = new int[] {
+            Color.BLACK.number,
             Color.BLACK.number,
             Color.BLACK.number,
             Color.GREEN.number,
             Color.BLACK.number,
             Color.YELLOW.number};
 
-    private static final int[] BOTTOM_CENTER = new int[] {Color.BLACK.number,
+    private static final int[] BOTTOM_CENTER = new int[] {
+            Color.BLACK.number,
             Color.BLACK.number,
             Color.BLACK.number,
             Color.BLACK.number,
