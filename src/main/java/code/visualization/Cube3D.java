@@ -1,48 +1,68 @@
 package code.visualization;
 
 import code.calculation.Color;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point3D;
-import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.MeshView;
-import javafx.scene.shape.TriangleMesh;
+import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Translate;
+import javafx.util.Duration;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Cube3D {
+    ArrayList<Cube3DPart> cubes = new ArrayList<>();
+    Rotate rotateX = new Rotate(30, -0.25, -0.25 ,1.25, Rotate.X_AXIS);
+    Rotate rotateY = new Rotate(30, -0.25, -0.25 ,1.25, Rotate.Y_AXIS);
 
-    Group cube = new Group();
-    Rotate rotateX = new Rotate(0, -0.25, -0.25 ,1.25, Rotate.X_AXIS);
-    Rotate rotateY = new Rotate(0, -0.25, -0.25 ,1.25, Rotate.Y_AXIS);
+    int[] currentIndexes;
+
+    Point3D currentAxis;
+
+    boolean isRotating;
+
+    ChangeListener<Number> rotMap = new ChangeListener<>() {
+        @Override
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            Arrays.stream(currentIndexes).forEach(index -> {
+                Rotate rotate = new Rotate(newValue.doubleValue() - oldValue.doubleValue(),
+                        -0.25, -0.25, 1.25, currentAxis);
+                Affine affine = cubes.get(index).getAffine();
+                affine.prepend(rotate);
+            });
+        }
+    };
+
+    int[] topIndexes = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8};
+    int[] downIndexes = new int[] {23, 22, 21, 20, 19, 18, 17, 24, 25};
+    int[] rightIndexes = new int[] {19, 20, 21, 13, 4, 3, 2, 11, 12};
+    int[] leftIndexes = new int[] {23, 24, 17, 9, 0, 7, 6, 15, 16};
+    int[] frontIndexes = new int[] {17, 18, 19, 11, 2, 1, 0, 9, 10};
+    int[] backIndexes = new int[] {21, 22, 23, 15, 6, 5, 4, 13, 14};
 
     public Cube3D() throws FileNotFoundException {
-        PhongMaterial material = new PhongMaterial();
-        material.setDiffuseMap(new Image(
-            new FileInputStream("E:\\project\\rubiksCube\\src\\main\\java\\code\\imageResources\\color_palette.png")));
-
         AtomicInteger cont = new AtomicInteger();
-        cubeFacePatterns.forEach(p -> {
-            MeshView meshP = new MeshView();
-            meshP.setMesh(createCube(p));
-            meshP.setMaterial(material);
-            Point3D pt = cubePositions.get(cont.getAndIncrement());
-            meshP.getTransforms().addAll(new Translate(pt.getX(), pt.getY(), pt.getZ()));
-            cube.getChildren().add(meshP);
-
-        });
-
-        cube.getTransforms().addAll(rotateX, rotateY);
+        for (int[] pattern : cubeFacePatterns) {
+            Point3D position = cubePositions.get(cont.getAndIncrement());
+            Cube3DPart someCube = new Cube3DPart(pattern, position);
+            someCube.getTransforms().addAll(rotateX, rotateY);
+            someCube.getTransforms().add(someCube.getAffine());
+            cubes.add(someCube);
+        }
     }
 
-    public Group getCube() {
-        return cube;
+    public ArrayList<Cube3DPart> getCube() {
+        return cubes;
     }
 
     public Rotate getRotateX() {
@@ -53,66 +73,222 @@ public class Cube3D {
         return rotateY;
     }
 
-    public TriangleMesh createCube(int[] faces) {
-        TriangleMesh mesh = new TriangleMesh();
+    public boolean isRotating() {
+        return isRotating;
+    }
 
-        mesh.getPoints().addAll(
-                0f, 0f, 0f,
-                0f, 0.5f, 0f,
-                -0.5f, 0f, 0f,
-                -0.5f, 0.5f, 0f,
-                0f, 0f, -0.5f,
-                0f, 0.5f, -0.5f,
-                -0.5f, 0f, -0.5f,
-                -0.5f, 0.5f, -0.5f
-        );
-        mesh.getTexCoords().addAll(
-                1f, 0f,
-                0f, 0f,
-                1f, 1f / 7f,
-                0f, 1f / 7f,
-                1f, 2f / 7f,
-                0f, 2f / 7f,
-                1f, 3f / 7f,
-                0f, 3f / 7f,
-                1f, 4f / 7f,
-                0f, 4f / 7f,
-                1f, 5f / 7f,
-                0f, 5f / 7f,
-                1f, 6f / 7f,
-                0f, 6f / 7f,
-                1f, 1f,
-                0f, 1f
-        );
-        mesh.getFaces().addAll(
-                4, faces[0], 0, 2 + faces[0], 6, 1 + faces[0], //TOP
-                0, 1 + faces[0], 2, 3 + faces[0], 6, 2 + faces[0],
+    private void rotate(double angle) {
+        DoubleProperty rotation=new SimpleDoubleProperty(0d);
+        rotation.addListener(rotMap);
+        isRotating = true;
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.millis(500), e -> {
+                    rotation.removeListener(rotMap);
+                    isRotating = false;
+                } , new KeyValue(rotation, angle)));
+        timeline.playFromStart();
 
-                6, faces[1], 7, 2 + faces[1], 4, 1 + faces[1],       //FRONT
-                7, 1 + faces[1], 5, 3 + faces[1], 4, 2 + faces[1],
+    }
 
-                4, faces[2], 5, 2 + faces[2], 0, 1 + faces[2],       //RIGHT
-                5, 1 + faces[2], 1, 3 + faces[2], 0, 2 + faces[2],
+    public void rotateTop(int sign) {
+        currentIndexes = topIndexes;
+        currentAxis = Rotate.Y_AXIS;
 
-                2, faces[3], 3, 2 + faces[3], 6, 1 + faces[3],       //LEFT
-                3, 1 + faces[3], 7, 3 + faces[3], 6, 2 + faces[3],
+        rotate(sign * 90);
 
-                0, faces[4], 1, 2 + faces[4], 2, 1 + faces[4],       //BACK
-                1, 1 + faces[4], 3, 3 + faces[4], 2, 2 + faces[4],
+        if (sign > 0) {
+            moveIndexesForward(topIndexes);
+        } else {
+            moveIndexesReverse(topIndexes);
+        }
 
-                1, faces[5], 5, 2 + faces[5], 3, 1 + faces[5],       //DOWN
-                5, 1 + faces[5], 7, 3 + faces[5], 3, 2 + faces[5]
-        );
+        rightIndexes[4] = topIndexes[4];
+        rightIndexes[5] = topIndexes[3];
+        rightIndexes[6] = topIndexes[2];
 
-        return mesh;
+        leftIndexes[4] = topIndexes[0];
+        leftIndexes[5] = topIndexes[7];
+        leftIndexes[6] = topIndexes[6];
+
+        frontIndexes[4] = topIndexes[2];
+        frontIndexes[5] = topIndexes[1];
+        frontIndexes[6] = topIndexes[0];
+
+        backIndexes[4] = topIndexes[6];
+        backIndexes[5] = topIndexes[5];
+        backIndexes[6] = topIndexes[4];
+    }
+
+    public void rotateRight(int sign) {
+        currentIndexes = rightIndexes;
+        currentAxis = Rotate.X_AXIS;
+
+        rotate(-sign * 90);
+        if (sign > 0) {
+            moveIndexesForward(rightIndexes);
+        } else {
+            moveIndexesReverse(rightIndexes);
+        }
+
+        topIndexes[2] = rightIndexes[6];
+        topIndexes[3] = rightIndexes[5];
+        topIndexes[4] = rightIndexes[4];
+
+        downIndexes[2] = rightIndexes[2];
+        downIndexes[3] = rightIndexes[1];
+        downIndexes[4] = rightIndexes[0];
+
+        frontIndexes[2] = rightIndexes[0];
+        frontIndexes[3] = rightIndexes[7];
+        frontIndexes[4] = rightIndexes[6];
+
+        backIndexes[0] = rightIndexes[2];
+        backIndexes[7] = rightIndexes[3];
+        backIndexes[6] = rightIndexes[4];
+    }
+
+    public void rotateLeft(int sign) {
+        currentIndexes = leftIndexes;
+        currentAxis = Rotate.X_AXIS;
+
+        rotate(sign * 90);
+
+        if (sign > 0) {
+            moveIndexesForward(leftIndexes);
+        } else {
+            moveIndexesReverse(leftIndexes);
+        }
+
+        topIndexes[0] = leftIndexes[4];
+        topIndexes[7] = leftIndexes[5];
+        topIndexes[6] = leftIndexes[6];
+
+        downIndexes[0] = leftIndexes[0];
+        downIndexes[7] = leftIndexes[1];
+        downIndexes[6] = leftIndexes[2];
+
+        frontIndexes[0] = leftIndexes[2];
+        frontIndexes[7] = leftIndexes[3];
+        frontIndexes[6] = leftIndexes[4];
+
+        backIndexes[2] = leftIndexes[0];
+        backIndexes[3] = leftIndexes[7];
+        backIndexes[4] = leftIndexes[6];
+    }
+
+    public void rotateDown(int sign) {
+        currentIndexes = downIndexes;
+        currentAxis = Rotate.Y_AXIS;
+
+        rotate(-sign * 90);
+
+        if (sign > 0) {
+            moveIndexesForward(downIndexes);
+        } else {
+            moveIndexesReverse(downIndexes);
+        }
+
+        rightIndexes[0] = downIndexes[4];
+        rightIndexes[1] = downIndexes[3];
+        rightIndexes[2] = downIndexes[2];
+
+        leftIndexes[0] = downIndexes[0];
+        leftIndexes[1] = downIndexes[7];
+        leftIndexes[2] = downIndexes[6];
+
+        frontIndexes[0] = downIndexes[6];
+        frontIndexes[1] = downIndexes[5];
+        frontIndexes[2] = downIndexes[4];
+
+        backIndexes[0] = downIndexes[2];
+        backIndexes[1] = downIndexes[1];
+        backIndexes[2] = downIndexes[0];
+    }
+
+    public void rotateFront(int sign) {
+        currentIndexes = frontIndexes;
+        currentAxis = Rotate.Z_AXIS;
+
+        rotate(sign * 90);
+
+        if (sign > 0) {
+            moveIndexesForward(frontIndexes);
+        } else {
+            moveIndexesReverse(frontIndexes);
+        }
+
+        topIndexes[0] = frontIndexes[6];
+        topIndexes[1] = frontIndexes[5];
+        topIndexes[2] = frontIndexes[4];
+
+        downIndexes[6] = frontIndexes[0];
+        downIndexes[5] = frontIndexes[1];
+        downIndexes[4] = frontIndexes[2];
+
+        rightIndexes[0] = frontIndexes[2];
+        rightIndexes[7] = frontIndexes[3];
+        rightIndexes[6] = frontIndexes[4];
+
+        leftIndexes[2] = frontIndexes[0];
+        leftIndexes[3] = frontIndexes[7];
+        leftIndexes[4] = frontIndexes[6];
+    }
+
+    public void rotateBack(int sign) {
+        currentIndexes = backIndexes;
+        currentAxis = Rotate.Z_AXIS;
+
+        rotate(-sign * 90);
+
+        if (sign > 0) {
+            moveIndexesForward(backIndexes);
+        } else {
+            moveIndexesReverse(backIndexes);
+        }
+
+        topIndexes[6] = backIndexes[4];
+        topIndexes[5] = backIndexes[5];
+        topIndexes[4] = backIndexes[6];
+
+        downIndexes[0] = backIndexes[2];
+        downIndexes[1] = backIndexes[1];
+        downIndexes[2] = backIndexes[0];
+
+        rightIndexes[2] = backIndexes[0];
+        rightIndexes[3] = backIndexes[7];
+        rightIndexes[4] = backIndexes[6];
+
+        leftIndexes[0] = backIndexes[2];
+        leftIndexes[7] = backIndexes[3];
+        leftIndexes[6] = backIndexes[4];
+    }
+
+    private void moveIndexesForward(int[] side) {
+        int tmpFirst = side[0];
+        int tmpSecond = side[1];
+        for (int i = 0; i < side.length - 3; i++) {
+            side[i] = side[i + 2];
+        }
+        side[6] = tmpFirst;
+        side[7] = tmpSecond;
+    }
+
+    private void moveIndexesReverse(int[] side) {
+        int tmpFirst = side[6];
+        int tmpSecond = side[7];
+        for (int i = side.length - 2; i >= 2 ; i--) {
+            side[i] = side[i-2];
+        }
+        side[0] = tmpFirst;
+        side[1] = tmpSecond;
     }
 
     private static final int[] TOP_CORNER_FRONT_LEFT = new int[] {Color.WHITE.number,
-                                                                  Color.RED.number,
-                                                                  Color.BLACK.number,
-                                                                  Color.GREEN.number,
-                                                                  Color.BLACK.number,
-                                                                  Color.BLACK.number};
+            Color.RED.number,
+            Color.BLACK.number,
+            Color.GREEN.number,
+            Color.BLACK.number,
+            Color.BLACK.number};
     private static final int[] TOP_BORDER_FRONT = new int[] {code.calculation.Color.WHITE.number,
             Color.RED.number,
             Color.BLACK.number,
