@@ -104,7 +104,7 @@ public class CubeController {
         movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_BACK_RIGHT.number).borderColor = tmpColor;
     }
 
-    public void positiveL() {
+    public void negativeL() {
         //rotate corners
         CubePartition tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number,
@@ -134,7 +134,7 @@ public class CubeController {
         movableCubes.set(CubesModel.CubeNumber.MID_BORDER_LEFT_BACK.number, tmpBorder);
     }
 
-    public void negativeL() {
+    public void positiveL() {
         //rotate corners
         CubePartition tmpCorner = movableCubes.get(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_CORNER_FRONT_LEFT.number,

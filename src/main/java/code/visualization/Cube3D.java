@@ -25,6 +25,8 @@ public class Cube3D {
     Rotate rotateX = new Rotate(30, -0.25, -0.25 ,1.25, Rotate.X_AXIS);
     Rotate rotateY = new Rotate(30, -0.25, -0.25 ,1.25, Rotate.Y_AXIS);
 
+    Rotate rotateZ = new Rotate(0, -0.25, -0.25 ,1.25, Rotate.Z_AXIS);
+
     int[] currentIndexes;
 
     Point3D currentAxis;
@@ -55,7 +57,7 @@ public class Cube3D {
         for (int[] pattern : cubeFacePatterns) {
             Point3D position = cubePositions.get(cont.getAndIncrement());
             Cube3DPart someCube = new Cube3DPart(pattern, position);
-            someCube.getTransforms().addAll(rotateX, rotateY);
+            someCube.getTransforms().addAll(rotateX, rotateY, rotateZ);
             someCube.getTransforms().add(someCube.getAffine());
             cubes.add(someCube);
         }

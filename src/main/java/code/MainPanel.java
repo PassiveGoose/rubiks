@@ -103,6 +103,9 @@ public final class MainPanel extends Application {
                         controller.positiveB();
                     }
                 }
+                if (event.getCode().equals(KeyCode.P)) {
+                    model.printModel();
+                }
             }
             event.consume();
         });
