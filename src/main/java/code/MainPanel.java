@@ -4,12 +4,17 @@ import code.calculation.CubeController;
 import code.calculation.CubesModel;
 import code.visualization.Cube3D;
 import code.visualization.Cube3DPart;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -103,12 +108,25 @@ public final class MainPanel extends Application {
                         controller.positiveB();
                     }
                 }
+                if (event.getCode().equals(KeyCode.RIGHT)) {
+                    cube3D.rotateHorizontal(POSITIVE_ROTATION);
+                }
+                if (event.getCode().equals(KeyCode.LEFT)) {
+                    cube3D.rotateHorizontal(NEGATIVE_ROTATION);
+                }
+                if (event.getCode().equals(KeyCode.DOWN)) {
+                    cube3D.rotateVertical(POSITIVE_ROTATION);
+                }
+                if (event.getCode().equals(KeyCode.UP)) {
+                    cube3D.rotateVertical(NEGATIVE_ROTATION);
+                }
                 if (event.getCode().equals(KeyCode.P)) {
                     model.printModel();
                 }
             }
             event.consume();
         });
+        /*
         scene.setOnMousePressed(me -> {
             mouseOldX = me.getSceneX();
             mouseOldY = me.getSceneY();
@@ -120,7 +138,7 @@ public final class MainPanel extends Application {
             cube3D.getRotateY().setAngle(cube3D.getRotateY().getAngle()+(mouseOldX - mousePosX));
             mouseOldX = mousePosX;
             mouseOldY = mousePosY;
-        });
+        });*/
 
         stage.setScene(scene);
         stage.show();

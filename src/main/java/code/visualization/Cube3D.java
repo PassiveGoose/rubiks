@@ -25,15 +25,11 @@ public class Cube3D {
     Rotate rotateX = new Rotate(30, -0.25, -0.25 ,1.25, Rotate.X_AXIS);
     Rotate rotateY = new Rotate(30, -0.25, -0.25 ,1.25, Rotate.Y_AXIS);
 
-    Rotate rotateZ = new Rotate(0, -0.25, -0.25 ,1.25, Rotate.Z_AXIS);
-
     int[] currentIndexes;
-
     Point3D currentAxis;
-
     boolean isRotating;
 
-    ChangeListener<Number> rotMap = new ChangeListener<>() {
+    ChangeListener<Number> rotationListener = new ChangeListener<>() {
         @Override
         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
             Arrays.stream(currentIndexes).forEach(index -> {
@@ -52,12 +48,23 @@ public class Cube3D {
     int[] frontIndexes = new int[] {17, 18, 19, 11, 2, 1, 0, 9, 10};
     int[] backIndexes = new int[] {21, 22, 23, 15, 6, 5, 4, 13, 14};
 
+    int[] allIndexes = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                                  11, 12, 13, 14, 15, 16, 17, 18, 19,
+                                  20, 21, 22, 23, 24, 25};
+
+    Point3D topAxis = Rotate.Y_AXIS;
+    Point3D downAxis = Rotate.Y_AXIS;
+    Point3D rightAxis = Rotate.X_AXIS;
+    Point3D leftAxis = Rotate.X_AXIS;
+    Point3D frontAxis = Rotate.Z_AXIS;
+    Point3D backAxis = Rotate.Z_AXIS;
+
     public Cube3D() throws FileNotFoundException {
         AtomicInteger cont = new AtomicInteger();
         for (int[] pattern : cubeFacePatterns) {
             Point3D position = cubePositions.get(cont.getAndIncrement());
             Cube3DPart someCube = new Cube3DPart(pattern, position);
-            someCube.getTransforms().addAll(rotateX, rotateY, rotateZ);
+            someCube.getTransforms().addAll(rotateX, rotateY);
             someCube.getTransforms().add(someCube.getAffine());
             cubes.add(someCube);
         }
@@ -81,19 +88,75 @@ public class Cube3D {
 
     private void rotate(double angle) {
         DoubleProperty rotation=new SimpleDoubleProperty(0d);
-        rotation.addListener(rotMap);
+        rotation.addListener(rotationListener);
         isRotating = true;
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(200), e -> {
-                    rotation.removeListener(rotMap);
+                    rotation.removeListener(rotationListener);
                     isRotating = false;
                 } , new KeyValue(rotation, angle)));
         timeline.playFromStart();
     }
 
+    public void rotateHorizontal(int sign) {
+        currentIndexes = allIndexes;
+        currentAxis = Rotate.Y_AXIS;
+
+        rotate(sign * 90);
+        if (sign > 0) {
+            moveSides(rightIndexes, leftIndexes, topIndexes, downIndexes);
+        } else {
+            moveSides(leftIndexes, rightIndexes, downIndexes, topIndexes);
+        }
+    }
+
+    private void moveSides(int[] rightIndexes, int[] leftIndexes, int[] topIndexes, int[] downIndexes) {
+        int[] tmpIndexes = new int[9];
+        System.arraycopy(frontIndexes, 0, tmpIndexes, 0, rightIndexes.length);
+        System.arraycopy(rightIndexes, 0, frontIndexes, 0, rightIndexes.length);
+        System.arraycopy(backIndexes, 0, rightIndexes, 0, rightIndexes.length);
+        System.arraycopy(leftIndexes, 0, backIndexes, 0, rightIndexes.length);
+        System.arraycopy(tmpIndexes, 0, leftIndexes, 0, rightIndexes.length);
+
+        moveIndexesForward(topIndexes);
+        moveIndexesReverse(downIndexes);
+    }
+
+    public void rotateVertical(int sign) {
+        currentIndexes = allIndexes;
+        currentAxis = Rotate.X_AXIS;
+
+        rotate(sign * 90);
+
+        if (sign > 0) {
+            moveSides(topIndexes, downIndexes, leftIndexes, rightIndexes);
+            reverseSide(topIndexes);
+            reverseSide(backIndexes);
+        } else {
+            moveSides(downIndexes, topIndexes, rightIndexes, leftIndexes);
+            reverseSide(downIndexes);
+            reverseSide(backIndexes);
+        }
+
+    }
+
+    public void rotateUpToDown() {
+        moveSides(topIndexes, downIndexes, leftIndexes, rightIndexes);
+        reverseSide(topIndexes);
+        reverseSide(backIndexes);
+    }
+
+    private void reverseSide(int[] side) {
+        for (int i = 0; i < 4; i++) {
+            int tmp = side[i];
+            side[i] = side[i + 4];
+            side[i + 4] = tmp;
+        }
+    }
+
     public void rotateTop(int sign) {
         currentIndexes = topIndexes;
-        currentAxis = Rotate.Y_AXIS;
+        currentAxis = topAxis;
 
         rotate(sign * 90);
 
@@ -122,7 +185,7 @@ public class Cube3D {
 
     public void rotateRight(int sign) {
         currentIndexes = rightIndexes;
-        currentAxis = Rotate.X_AXIS;
+        currentAxis = rightAxis;
 
         rotate(-sign * 90);
         if (sign > 0) {
@@ -150,7 +213,7 @@ public class Cube3D {
 
     public void rotateLeft(int sign) {
         currentIndexes = leftIndexes;
-        currentAxis = Rotate.X_AXIS;
+        currentAxis = leftAxis;
 
         rotate(sign * 90);
 
@@ -179,7 +242,7 @@ public class Cube3D {
 
     public void rotateDown(int sign) {
         currentIndexes = downIndexes;
-        currentAxis = Rotate.Y_AXIS;
+        currentAxis = downAxis;
 
         rotate(-sign * 90);
 
@@ -208,7 +271,7 @@ public class Cube3D {
 
     public void rotateFront(int sign) {
         currentIndexes = frontIndexes;
-        currentAxis = Rotate.Z_AXIS;
+        currentAxis = frontAxis;
 
         rotate(sign * 90);
 
@@ -237,7 +300,7 @@ public class Cube3D {
 
     public void rotateBack(int sign) {
         currentIndexes = backIndexes;
-        currentAxis = Rotate.Z_AXIS;
+        currentAxis = backAxis;
 
         rotate(-sign * 90);
 
