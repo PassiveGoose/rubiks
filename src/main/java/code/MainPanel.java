@@ -100,15 +100,19 @@ public final class MainPanel extends Application {
                 }
                 if (event.getCode().equals(KeyCode.RIGHT)) {
                     cube3D.rotateHorizontal(POSITIVE_ROTATION);
+                    controller.rotateRightToFront();
                 }
                 if (event.getCode().equals(KeyCode.LEFT)) {
                     cube3D.rotateHorizontal(NEGATIVE_ROTATION);
+                    controller.rotateLeftToFront();
                 }
                 if (event.getCode().equals(KeyCode.DOWN)) {
                     cube3D.rotateVertical(POSITIVE_ROTATION);
+                    controller.rotateUpToFront();
                 }
                 if (event.getCode().equals(KeyCode.UP)) {
                     cube3D.rotateVertical(NEGATIVE_ROTATION);
+                    controller.rotateDownToFront();
                 }
                 if (event.getCode().equals(KeyCode.P)) {
                     model.printModel();
