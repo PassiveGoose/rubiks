@@ -83,7 +83,7 @@ public class Cube3D {
         rotation.addListener(rotationListener);
         isRotating = true;
         Timeline timeline = new Timeline(
-                new KeyFrame(Duration.millis(200), e -> {
+                new KeyFrame(Duration.millis(300), e -> {
                     rotation.removeListener(rotationListener);
                     isRotating = false;
                 } , new KeyValue(rotation, angle)));

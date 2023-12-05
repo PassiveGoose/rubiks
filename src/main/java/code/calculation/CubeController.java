@@ -589,7 +589,7 @@ public class CubeController {
 
     public void rotateUpToFront() {
         negativeR();
-        negativeL();
+        positiveL();
         moveCentresUpToFront();
         CubePart tmpBorder = movableCubes.get(CubesModel.CubeNumber.TOP_BORDER_FRONT.number);
         movableCubes.set(CubesModel.CubeNumber.TOP_BORDER_FRONT.number,
