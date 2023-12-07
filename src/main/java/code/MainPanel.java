@@ -16,16 +16,14 @@ import java.util.ArrayList;
 
 public final class MainPanel extends Application {
 
-    private static final int POSITIVE_ROTATION = 1;
-
-    private static final int NEGATIVE_ROTATION = -1;
-
     Cube3D cube3D;
+
+    CubeController controller;
 
     @Override
     public void start(Stage stage) throws FileNotFoundException{
         CubesModel model = new CubesModel();
-        CubeController controller = model.getController();
+        controller = model.getController();
 
         Group sceneRoot = new Group();
         Scene scene = new Scene(sceneRoot, 800, 800, true, SceneAntialiasing.BALANCED);
@@ -44,79 +42,74 @@ public final class MainPanel extends Application {
 
         scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (!cube3D.isRotating()) {
-                if (event.getCode().equals(KeyCode.T)) {
-                    if (event.isShiftDown()) {
-                        cube3D.rotateTop(NEGATIVE_ROTATION);
-                        controller.negativeT();
-                    } else {
-                        cube3D.rotateTop(POSITIVE_ROTATION);
-                        controller.positiveT();
-                    }
-                }
-                if (event.getCode().equals(KeyCode.R)) {
-                    if (event.isShiftDown()) {
-                        cube3D.rotateRight(NEGATIVE_ROTATION);
-                        controller.negativeR();
-                    } else {
-                        cube3D.rotateRight(POSITIVE_ROTATION);
-                        controller.positiveR();
-                    }
-                }
-                if (event.getCode().equals(KeyCode.L)) {
-                    if (event.isShiftDown()) {
-                        cube3D.rotateLeft(NEGATIVE_ROTATION);
-                        controller.negativeL();
-                    } else {
-                        cube3D.rotateLeft(POSITIVE_ROTATION);
-                        controller.positiveL();
-                    }
-                }
-                if (event.getCode().equals(KeyCode.D)) {
-                    if (event.isShiftDown()) {
-                        cube3D.rotateDown(NEGATIVE_ROTATION);
-                        controller.negativeD();
-                    } else {
-                        cube3D.rotateDown(POSITIVE_ROTATION);
-                        controller.positiveD();
-                    }
-                }
-                if (event.getCode().equals(KeyCode.F)) {
-                    if (event.isShiftDown()) {
-                        cube3D.rotateFront(NEGATIVE_ROTATION);
-                        controller.negativeF();
-                    } else {
-                        cube3D.rotateFront(POSITIVE_ROTATION);
-                        controller.positiveF();
-                    }
-                }
-                if (event.getCode().equals(KeyCode.B)) {
-                    if (event.isShiftDown()) {
-                        cube3D.rotateBack(NEGATIVE_ROTATION);
-                        controller.negativeB();
-                    } else {
-                        cube3D.rotateBack(POSITIVE_ROTATION);
-                        controller.positiveB();
-                    }
-                }
-                if (event.getCode().equals(KeyCode.RIGHT)) {
-                    cube3D.rotateHorizontal(POSITIVE_ROTATION);
-                    controller.rotateRightToFront();
-                }
-                if (event.getCode().equals(KeyCode.LEFT)) {
-                    cube3D.rotateHorizontal(NEGATIVE_ROTATION);
-                    controller.rotateLeftToFront();
-                }
-                if (event.getCode().equals(KeyCode.DOWN)) {
-                    cube3D.rotateVertical(POSITIVE_ROTATION);
-                    controller.rotateUpToFront();
-                }
-                if (event.getCode().equals(KeyCode.UP)) {
-                    cube3D.rotateVertical(NEGATIVE_ROTATION);
-                    controller.rotateDownToFront();
-                }
                 if (event.getCode().equals(KeyCode.P)) {
                     model.printModel();
                 }
+                if (event.getCode().equals(KeyCode.M)) {
+                    try {
+                        messCube();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+            if (event.getCode().equals(KeyCode.T)) {
+                if (event.isShiftDown()) {
+                    Ti();
+                } else {
+                    T();
+                }
+            }
+            if (event.getCode().equals(KeyCode.R)) {
+                if (event.isShiftDown()) {
+                    Ri();
+                } else {
+                    R();
+                }
+            }
+            if (event.getCode().equals(KeyCode.L)) {
+                if (event.isShiftDown()) {
+                    Li();
+                } else {
+                    L();
+                }
+            }
+            if (event.getCode().equals(KeyCode.D)) {
+                if (event.isShiftDown()) {
+                    Di();
+                } else {
+                    D();
+                }
+            }
+            if (event.getCode().equals(KeyCode.F)) {
+                if (event.isShiftDown()) {
+                    Fi();
+                } else {
+                    F();
+                }
+            }
+            if (event.getCode().equals(KeyCode.B)) {
+                if (event.isShiftDown()) {
+                    Bi();
+                } else {
+                    B();
+                }
+            }
+            if (event.getCode().equals(KeyCode.RIGHT)) {
+                cube3D.addRotation(Cube3D.RotateOperation.POSITIVE_HORIZONTAL);
+                controller.rotateRightToFront();
+            }
+            if (event.getCode().equals(KeyCode.LEFT)) {
+                cube3D.addRotation(Cube3D.RotateOperation.NEGATIVE_HORIZONTAL);
+                controller.rotateLeftToFront();
+            }
+            if (event.getCode().equals(KeyCode.DOWN)) {
+                cube3D.addRotation(Cube3D.RotateOperation.POSITIVE_VERTICAL);
+                controller.rotateUpToFront();
+            }
+            if (event.getCode().equals(KeyCode.UP)) {
+                cube3D.addRotation(Cube3D.RotateOperation.NEGATIVE_VERTICAL);
+                controller.rotateDownToFront();
             }
             event.consume();
         });
@@ -127,5 +120,97 @@ public final class MainPanel extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    private void messCube() throws InterruptedException {
+        R();
+        T();
+        L();
+        F();
+        B();
+        D();
+        Bi();
+        L();
+        R();
+        Ti();
+        R();
+        T();
+        L();
+        F();
+        B();
+        D();
+        Bi();
+        L();
+        R();
+        Ti();
+        F();
+        B();
+        D();
+        Bi();
+        L();
+        R();
+        Ti();
+        R();
+        T();
+    }
+
+    private void T() {
+        cube3D.addRotation(Cube3D.RotateOperation.POSITIVE_TOP);
+        controller.positiveT();
+    }
+
+    private void Ti() {
+        cube3D.addRotation(Cube3D.RotateOperation.NEGATIVE_TOP);
+        controller.negativeT();
+    }
+
+    private void F() {
+        cube3D.addRotation(Cube3D.RotateOperation.POSITIVE_FRONT);
+        controller.positiveF();
+    }
+
+    private void Fi() {
+        cube3D.addRotation(Cube3D.RotateOperation.NEGATIVE_FRONT);
+        controller.negativeF();
+    }
+
+    private void R() {
+        cube3D.addRotation(Cube3D.RotateOperation.POSITIVE_RIGHT);
+        controller.positiveR();
+    }
+
+    private void Ri() {
+        cube3D.addRotation(Cube3D.RotateOperation.NEGATIVE_RIGHT);
+        controller.negativeR();
+    }
+
+    private void L() {
+        cube3D.addRotation(Cube3D.RotateOperation.POSITIVE_LEFT);
+        controller.positiveL();
+    }
+
+    private void Li() {
+        cube3D.addRotation(Cube3D.RotateOperation.NEGATIVE_LEFT);
+        controller.negativeL();
+    }
+
+    private void B() {
+        cube3D.addRotation(Cube3D.RotateOperation.POSITIVE_BACK);
+        controller.positiveB();
+    }
+
+    private void Bi() {
+        cube3D.addRotation(Cube3D.RotateOperation.NEGATIVE_BACK);
+        controller.negativeB();
+    }
+
+    private void D() {
+        cube3D.addRotation(Cube3D.RotateOperation.POSITIVE_DOWN);
+        controller.positiveD();
+    }
+
+    private void Di() {
+        cube3D.addRotation(Cube3D.RotateOperation.NEGATIVE_DOWN);
+        controller.negativeD();
     }
 }

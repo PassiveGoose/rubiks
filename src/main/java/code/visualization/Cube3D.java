@@ -7,20 +7,41 @@ import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point3D;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Cube3D {
+
+    private static final int POSITIVE_ROTATION = 1;
+
+    private static final int NEGATIVE_ROTATION = -1;
+
+    public enum RotateOperation {
+        POSITIVE_TOP,
+        NEGATIVE_TOP,
+        POSITIVE_RIGHT,
+        NEGATIVE_RIGHT,
+        POSITIVE_LEFT,
+        NEGATIVE_LEFT,
+        POSITIVE_FRONT,
+        NEGATIVE_FRONT,
+        POSITIVE_BACK,
+        NEGATIVE_BACK,
+        POSITIVE_DOWN,
+        NEGATIVE_DOWN,
+        POSITIVE_VERTICAL,
+        NEGATIVE_VERTICAL,
+        POSITIVE_HORIZONTAL,
+        NEGATIVE_HORIZONTAL
+
+    }
     ArrayList<Cube3DPart> cubes = new ArrayList<>();
     Rotate rotateX = new Rotate(30, -0.25, -0.25 ,1.25, Rotate.X_AXIS);
     Rotate rotateY = new Rotate(30, -0.25, -0.25 ,1.25, Rotate.Y_AXIS);
@@ -29,17 +50,50 @@ public class Cube3D {
     Point3D currentAxis;
     boolean isRotating;
 
-    ChangeListener<Number> rotationListener = new ChangeListener<>() {
-        @Override
-        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-            Arrays.stream(currentIndexes).forEach(index -> {
-                Rotate rotate = new Rotate(newValue.doubleValue() - oldValue.doubleValue(),
-                        -0.25, -0.25, 1.25, currentAxis);
-                Affine affine = cubes.get(index).getAffine();
-                affine.prepend(rotate);
-            });
+    Deque<RotateOperation> rotations = new ArrayDeque<>();
+
+    Timeline rotationTimeLine = new Timeline();
+
+    public void addRotation(RotateOperation operation) {
+        rotations.addLast(operation);
+        if (!rotations.isEmpty()) {
+            processNextRotation();
         }
-    };
+    }
+
+    private void processNextRotation() {
+        if (!isRotating) {
+            if (!rotations.isEmpty()) {
+                RotateOperation operation = rotations.poll();
+                switch (operation) {
+                    case POSITIVE_TOP -> rotateTop(POSITIVE_ROTATION);
+                    case NEGATIVE_TOP -> rotateTop(NEGATIVE_ROTATION);
+                    case POSITIVE_RIGHT -> rotateRight(POSITIVE_ROTATION);
+                    case NEGATIVE_RIGHT -> rotateRight(NEGATIVE_ROTATION);
+                    case POSITIVE_LEFT -> rotateLeft(POSITIVE_ROTATION);
+                    case NEGATIVE_LEFT -> rotateLeft(NEGATIVE_ROTATION);
+                    case POSITIVE_FRONT -> rotateFront(POSITIVE_ROTATION);
+                    case NEGATIVE_FRONT -> rotateFront(NEGATIVE_ROTATION);
+                    case POSITIVE_BACK -> rotateBack(POSITIVE_ROTATION);
+                    case NEGATIVE_BACK -> rotateBack(NEGATIVE_ROTATION);
+                    case POSITIVE_DOWN -> rotateDown(POSITIVE_ROTATION);
+                    case NEGATIVE_DOWN -> rotateDown(NEGATIVE_ROTATION);
+                    case POSITIVE_VERTICAL -> rotateVertical(POSITIVE_ROTATION);
+                    case NEGATIVE_VERTICAL -> rotateVertical(NEGATIVE_ROTATION);
+                    case POSITIVE_HORIZONTAL -> rotateHorizontal(POSITIVE_ROTATION);
+                    case NEGATIVE_HORIZONTAL -> rotateHorizontal(NEGATIVE_ROTATION);
+                }
+            }
+        }
+    }
+
+    ChangeListener<Number> rotationListener = (ov, oldAngle, newAngle)
+            -> Arrays.stream(currentIndexes).forEach(index -> {
+        Rotate rotate = new Rotate(newAngle.doubleValue() - oldAngle.doubleValue(),
+                -0.25, -0.25, 1.25, currentAxis);
+        Affine affine = cubes.get(index).getAffine();
+        affine.prepend(rotate);
+    });
 
     int[] topIndexes = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8};
     int[] downIndexes = new int[] {23, 22, 21, 20, 19, 18, 17, 24, 25};
@@ -47,7 +101,6 @@ public class Cube3D {
     int[] leftIndexes = new int[] {23, 24, 17, 9, 0, 7, 6, 15, 16};
     int[] frontIndexes = new int[] {17, 18, 19, 11, 2, 1, 0, 9, 10};
     int[] backIndexes = new int[] {21, 22, 23, 15, 6, 5, 4, 13, 14};
-
     int[] allIndexes = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
                                   11, 12, 13, 14, 15, 16, 17, 18, 19,
                                   20, 21, 22, 23, 24, 25};
@@ -68,6 +121,7 @@ public class Cube3D {
             someCube.getTransforms().add(someCube.getAffine());
             cubes.add(someCube);
         }
+
     }
 
     public ArrayList<Cube3DPart> getCube() {
@@ -82,12 +136,13 @@ public class Cube3D {
         DoubleProperty rotation=new SimpleDoubleProperty(0d);
         rotation.addListener(rotationListener);
         isRotating = true;
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.millis(300), e -> {
+        rotationTimeLine = new Timeline(
+                new KeyFrame(Duration.millis(250), e -> {
                     rotation.removeListener(rotationListener);
                     isRotating = false;
                 } , new KeyValue(rotation, angle)));
-        timeline.playFromStart();
+        rotationTimeLine.setOnFinished(e -> processNextRotation());
+        rotationTimeLine.playFromStart();
     }
 
     public void rotateHorizontal(int sign) {
@@ -141,7 +196,7 @@ public class Cube3D {
         }
     }
 
-    public void rotateTop(int sign) {
+    private void rotateTop(int sign) {
         currentIndexes = topIndexes;
         currentAxis = topAxis;
 
@@ -170,7 +225,7 @@ public class Cube3D {
         backIndexes[6] = topIndexes[4];
     }
 
-    public void rotateRight(int sign) {
+    private void rotateRight(int sign) {
         currentIndexes = rightIndexes;
         currentAxis = rightAxis;
 
@@ -198,7 +253,7 @@ public class Cube3D {
         backIndexes[6] = rightIndexes[4];
     }
 
-    public void rotateLeft(int sign) {
+    private void rotateLeft(int sign) {
         currentIndexes = leftIndexes;
         currentAxis = leftAxis;
 
@@ -227,7 +282,7 @@ public class Cube3D {
         backIndexes[4] = leftIndexes[6];
     }
 
-    public void rotateDown(int sign) {
+    private void rotateDown(int sign) {
         currentIndexes = downIndexes;
         currentAxis = downAxis;
 
@@ -256,7 +311,7 @@ public class Cube3D {
         backIndexes[2] = downIndexes[0];
     }
 
-    public void rotateFront(int sign) {
+    private void rotateFront(int sign) {
         currentIndexes = frontIndexes;
         currentAxis = frontAxis;
 
@@ -285,7 +340,7 @@ public class Cube3D {
         leftIndexes[4] = frontIndexes[6];
     }
 
-    public void rotateBack(int sign) {
+    private void rotateBack(int sign) {
         currentIndexes = backIndexes;
         currentAxis = backAxis;
 
