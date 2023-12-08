@@ -13,11 +13,11 @@ public class CubePart {
         CORNER
     }
 
-    Color frontColor;
+    public Color frontColor;
 
-    Color borderColor = null;
+    public Color borderColor = null;
 
-    Color cornerColor = null;
+    public Color cornerColor = null;
 
     CubeType type;
 

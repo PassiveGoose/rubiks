@@ -28,7 +28,7 @@ public class CubesModel {
         BOTTOM_CORNER_FRONT_LEFT(18),
         BOTTOM_BORDER_LEFT(19);
 
-        final int number;
+        public final int number;
 
         CubeNumber(int number) {
             this.number = number;
@@ -268,7 +268,51 @@ public class CubesModel {
         return topSide;
     }
 
+    public Color[][] getFrontSide() {
+        Color[][] frontSide = new Color[3][3];
+
+        frontSide[0][0] = movableCubes.get(CubeNumber.TOP_CORNER_FRONT_LEFT.number).borderColor;
+        frontSide[0][1] = movableCubes.get(CubeNumber.TOP_BORDER_FRONT.number).borderColor;
+        frontSide[0][2] = movableCubes.get(CubeNumber.TOP_CORNER_RIGHT_FRONT.number).borderColor;
+        frontSide[1][0] = movableCubes.get(CubeNumber.MID_BORDER_FRONT_LEFT.number).frontColor;
+        frontSide[1][1] = frontCenter.frontColor;
+        frontSide[1][2] = movableCubes.get(CubeNumber.MID_BORDER_RIGHT_FRONT.number).frontColor;
+        frontSide[2][0] = movableCubes.get(CubeNumber.BOTTOM_CORNER_FRONT_LEFT.number).borderColor;
+        frontSide[2][1] = movableCubes.get(CubeNumber.BOTTOM_BORDER_FRONT.number).borderColor;
+        frontSide[2][2] = movableCubes.get(CubeNumber.BOTTOM_CORNER_RIGHT_FRONT.number).borderColor;
+
+        return frontSide;
+    }
+
+    public Color[][] getDownSide() {
+        Color[][] downSide = new Color[3][3];
+
+        downSide[0][0] = movableCubes.get(CubeNumber.BOTTOM_CORNER_FRONT_LEFT.number).frontColor;
+        downSide[0][1] = movableCubes.get(CubeNumber.BOTTOM_BORDER_FRONT.number).frontColor;
+        downSide[0][2] = movableCubes.get(CubeNumber.BOTTOM_CORNER_RIGHT_FRONT.number).frontColor;
+        downSide[1][0] = movableCubes.get(CubeNumber.BOTTOM_BORDER_LEFT.number).frontColor;
+        downSide[1][1] = bottomCenter.frontColor;
+        downSide[1][2] = movableCubes.get(CubeNumber.BOTTOM_BORDER_RIGHT.number).frontColor;
+        downSide[2][0] = movableCubes.get(CubeNumber.BOTTOM_CORNER_LEFT_BACK.number).frontColor;
+        downSide[2][1] = movableCubes.get(CubeNumber.BOTTOM_BORDER_BACK.number).frontColor;
+        downSide[2][2] = movableCubes.get(CubeNumber.BOTTOM_CORNER_BACK_RIGHT.number).frontColor;
+
+        return downSide;
+    }
+
     public CubeController getController() {
         return controller;
+    }
+
+    public ArrayList<CubePart> getMovableCubes() {
+        return movableCubes;
+    }
+
+    public CubePart getFrontCenter() {
+        return frontCenter;
+    }
+
+    public CubePart getRightCenter() {
+        return rightCenter;
     }
 }

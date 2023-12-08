@@ -40,6 +40,8 @@ public final class MainPanel extends Application {
         sceneRoot.getChildren().addAll(cubes);
         sceneRoot.getChildren().add(new AmbientLight(Color.WHITE));
 
+        Solver cubeSolver = new Solver(model, cube3D);
+
         scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (!cube3D.isRotating()) {
                 if (event.getCode().equals(KeyCode.P)) {
@@ -51,6 +53,12 @@ public final class MainPanel extends Application {
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
+                }
+                if (event.getCode().equals(KeyCode.S)) {
+                    cubeSolver.solveCube();
+                }
+                if (event.getCode().equals(KeyCode.Q)) {
+                    cubeSolver.makeFullTwoLayers();
                 }
             }
             if (event.getCode().equals(KeyCode.T)) {
@@ -154,62 +162,62 @@ public final class MainPanel extends Application {
         T();
     }
 
-    private void T() {
+    public void T() {
         cube3D.addRotation(Cube3D.RotateOperation.POSITIVE_TOP);
         controller.positiveT();
     }
 
-    private void Ti() {
+    public void Ti() {
         cube3D.addRotation(Cube3D.RotateOperation.NEGATIVE_TOP);
         controller.negativeT();
     }
 
-    private void F() {
+    public void F() {
         cube3D.addRotation(Cube3D.RotateOperation.POSITIVE_FRONT);
         controller.positiveF();
     }
 
-    private void Fi() {
+    public void Fi() {
         cube3D.addRotation(Cube3D.RotateOperation.NEGATIVE_FRONT);
         controller.negativeF();
     }
 
-    private void R() {
+    public void R() {
         cube3D.addRotation(Cube3D.RotateOperation.POSITIVE_RIGHT);
         controller.positiveR();
     }
 
-    private void Ri() {
+    public void Ri() {
         cube3D.addRotation(Cube3D.RotateOperation.NEGATIVE_RIGHT);
         controller.negativeR();
     }
 
-    private void L() {
+    public void L() {
         cube3D.addRotation(Cube3D.RotateOperation.POSITIVE_LEFT);
         controller.positiveL();
     }
 
-    private void Li() {
+    public void Li() {
         cube3D.addRotation(Cube3D.RotateOperation.NEGATIVE_LEFT);
         controller.negativeL();
     }
 
-    private void B() {
+    public void B() {
         cube3D.addRotation(Cube3D.RotateOperation.POSITIVE_BACK);
         controller.positiveB();
     }
 
-    private void Bi() {
+    public void Bi() {
         cube3D.addRotation(Cube3D.RotateOperation.NEGATIVE_BACK);
         controller.negativeB();
     }
 
-    private void D() {
+    public void D() {
         cube3D.addRotation(Cube3D.RotateOperation.POSITIVE_DOWN);
         controller.positiveD();
     }
 
-    private void Di() {
+    public void Di() {
         cube3D.addRotation(Cube3D.RotateOperation.NEGATIVE_DOWN);
         controller.negativeD();
     }
